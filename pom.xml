@@ -5,7 +5,7 @@
 	<groupId>org.logicware</groupId>
 	<artifactId>prolobjectlink-jpi-jpl-yap</artifactId>
 	<version>1.0.0</version>
-	<name>prolobjectlink-jpi-jpl7-yap</name>
+	<name>prolobjectlink-jpi-jpl-yap</name>
 	<description>JPL7 over SWI-Prolog Java Prolog Implementation</description>
 
 	<url>http://www.logicware.org</url>
