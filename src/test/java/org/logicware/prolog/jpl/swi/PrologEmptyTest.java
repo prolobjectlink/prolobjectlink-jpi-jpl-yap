@@ -204,7 +204,7 @@ public class PrologEmptyTest extends PrologBaseTest {
 		assertEquals(1, empty.compareTo(dValue));
 
 		// with variable
-		PrologVariable variable = provider.newVariable("X",0);
+		PrologVariable variable = provider.newVariable("X", 0);
 		// true. case [] and variable
 		assertEquals(1, empty.compareTo(variable));
 

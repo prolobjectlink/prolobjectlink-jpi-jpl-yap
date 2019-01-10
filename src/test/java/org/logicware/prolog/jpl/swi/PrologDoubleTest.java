@@ -264,7 +264,7 @@ public class PrologDoubleTest extends PrologBaseTest {
 		assertEquals(-1, dValue.compareTo(dValue1));
 
 		// with variable
-		PrologVariable variable = provider.newVariable("X",0);
+		PrologVariable variable = provider.newVariable("X", 0);
 		// true. case float and variable
 		assertEquals(1, dValue.compareTo(variable));
 

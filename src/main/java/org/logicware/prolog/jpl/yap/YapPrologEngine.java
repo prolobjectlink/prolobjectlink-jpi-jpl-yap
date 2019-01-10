@@ -19,10 +19,10 @@
  */
 package org.logicware.prolog.jpl.yap;
 
-import org.logicware.Licenses;
 import org.logicware.prolog.PrologEngine;
 import org.logicware.prolog.PrologProvider;
 import org.logicware.prolog.jpl.JplEngine;
+import org.worklogic.Licenses;
 
 import jpl.JPL;
 import jpl.Query;

@@ -33,8 +33,7 @@ public class YapProlog extends JplProvider implements PrologProvider {
 		super(new YapPrologConverter());
 		JPL.setNativeLibraryName("libjpl.dll");
 		JPL.setNativeLibraryDir("C:\\Program Files\\Yap64\\bin");
-		
-		
+
 		JPL.setNativeLibraryPath("C:\\Program Files\\Yap64\\bin\\libjpl.dll");
 		JPL.loadNativeLibrary();
 	}

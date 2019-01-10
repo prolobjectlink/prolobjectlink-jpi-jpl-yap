@@ -25,7 +25,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.logicware.prolog.PrologTermType.LONG_TYPE;
 
-import jpl.Integer;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -41,6 +40,8 @@ import org.logicware.prolog.PrologLong;
 import org.logicware.prolog.PrologStructure;
 import org.logicware.prolog.PrologTerm;
 import org.logicware.prolog.PrologVariable;
+
+import jpl.Integer;
 
 public class PrologLongTest extends PrologBaseTest {
 

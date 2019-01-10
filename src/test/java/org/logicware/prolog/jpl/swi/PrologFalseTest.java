@@ -210,7 +210,7 @@ public class PrologFalseTest extends PrologBaseTest {
 		assertEquals(1, f.compareTo(dValue));
 
 		// with variable
-		PrologVariable variable = provider.newVariable("X",0);
+		PrologVariable variable = provider.newVariable("X", 0);
 		assertEquals(1, f.compareTo(variable));
 
 		// with predicate

@@ -222,7 +222,7 @@ public class PrologExpressionTest extends PrologBaseTest {
 		assertEquals(1, expression.compareTo(dValue));
 
 		// with variable
-		PrologVariable variable = provider.newVariable("X",0);
+		PrologVariable variable = provider.newVariable("X", 0);
 		// true. case expression and variable
 		assertEquals(1, expression.compareTo(variable));
 

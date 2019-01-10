@@ -26,12 +26,6 @@ import static org.junit.Assert.assertNotNull;
 import java.util.HashMap;
 import java.util.Map;
 
-import jpl.Atom;
-import jpl.Compound;
-import jpl.Float;
-import jpl.Integer;
-import jpl.Term;
-import jpl.Variable;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -46,6 +40,13 @@ import org.logicware.prolog.PrologTerm;
 import org.logicware.prolog.PrologVariable;
 import org.logicware.prolog.jpl.JplList;
 import org.logicware.prolog.jpl.yap.YapPrologConverter;
+
+import jpl.Atom;
+import jpl.Compound;
+import jpl.Float;
+import jpl.Integer;
+import jpl.Term;
+import jpl.Variable;
 
 public class PrologConverterTest extends PrologBaseTest {
 
