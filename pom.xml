@@ -235,7 +235,7 @@
 							</mainClass>
 						</manifest>
 						<manifestEntries>
-							<Built-By>WorkLogic Project</Built-By>
+							<Built-By>Prolobjectlink Project</Built-By>
 						</manifestEntries>
 						<manifestSections>
 							<manifestSection>
@@ -243,10 +243,10 @@
 								<manifestEntries>
 									<Specification-Title>Prolobjectlink-JPI-TuProlog Library</Specification-Title>
 									<Specification-Version>${project.version}</Specification-Version>
-									<Specification-Vendor>WorkLogic Project</Specification-Vendor>
+									<Specification-Vendor>Prolobjectlink Project</Specification-Vendor>
 									<Implementation-Title>Prolobjectlink-JPI-TuProlog</Implementation-Title>
 									<Implementation-Version>${project.version}</Implementation-Version>
-									<Implementation-Vendor>WorkLogic Project</Implementation-Vendor>
+									<Implementation-Vendor>Prolobjectlink Project</Implementation-Vendor>
 								</manifestEntries>
 							</manifestSection>
 						</manifestSections>
