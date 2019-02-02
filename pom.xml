@@ -231,7 +231,7 @@
 						<manifest>
 							<addClasspath>true</addClasspath>
 							<mainClass>
-								org.logicware.prolog.jpl.yap.YapPrologConsole
+								org.prolobjectlink.prolog.jpl.yap.YapPrologConsole
 							</mainClass>
 						</manifest>
 						<manifestEntries>
