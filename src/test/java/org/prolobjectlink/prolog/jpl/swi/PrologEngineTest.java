@@ -1036,7 +1036,7 @@ public class PrologEngineTest extends PrologBaseTest {
 	}
 
 	@Test
-	public synchronized final void testCurrentOperators() {
+	public final void testCurrentOperators() {
 		Set<PrologOperator> operators = new HashSet<PrologOperator>();
 		String key = "LIST";
 		PrologEngine engine = provider.newEngine();
