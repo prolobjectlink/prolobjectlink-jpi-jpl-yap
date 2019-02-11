@@ -54,6 +54,12 @@
 			<directory>${project.basedir}/lang</directory>
 			<outputDirectory>lang</outputDirectory>
 		</fileSet>
+		
+		<!-- harness prolog to java folder -->
+		<fileSet>
+			<directory>${project.basedir}/obj</directory>
+			<outputDirectory>obj</outputDirectory>
+		</fileSet>
 
 		<!-- source code folder -->
 		<fileSet>
