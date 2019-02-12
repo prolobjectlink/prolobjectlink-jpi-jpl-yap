@@ -19,7 +19,7 @@
  */
 package org.prolobjectlink.prolog.jpl.yap;
 
-import org.prolobjectlink.Licenses;
+import org.prolobjectlink.prolog.Licenses;
 import org.prolobjectlink.prolog.PrologEngine;
 import org.prolobjectlink.prolog.PrologProvider;
 import org.prolobjectlink.prolog.jpl.JplEngine;
