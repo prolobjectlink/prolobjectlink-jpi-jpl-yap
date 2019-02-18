@@ -2,8 +2,8 @@ package org.prolobjectlink.prolog.jpl.swi;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.prolobjectlink.prolog.LoggerConstants.FILE_NOT_FOUND;
-import static org.prolobjectlink.prolog.LoggerConstants.IO;
+import static org.prolobjectlink.prolog.PrologLogger.FILE_NOT_FOUND;
+import static org.prolobjectlink.prolog.PrologLogger.IO;
 
 import java.io.BufferedReader;
 import java.io.File;
