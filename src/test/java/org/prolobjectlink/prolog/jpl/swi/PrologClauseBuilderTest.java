@@ -323,44 +323,6 @@ public class PrologClauseBuilderTest extends PrologBaseTest {
 	}
 
 	@Test
-	public final void testSemicolonPrologTerm() {
-
-		builder.begin(bigBear).assertz();
-		builder.begin(bigElephant).assertz();
-		builder.begin(smallCat).assertz();
-		builder.begin(brownBear).assertz();
-		builder.begin(blackCat).assertz();
-		builder.begin(grayElephant).assertz();
-
-		assertFalse(builder.begin(darkZ).neck(blackZ).semicolon(brownZ).clause());
-		builder.begin(darkZ).neck(blackZ).semicolon(brownZ).assertz();
-		assertTrue(builder.begin(darkZ).neck(blackZ).semicolon(brownZ).clause());
-
-		PrologQuery query = engine.query(darkX, bigX);
-		assertArrayEquals(bearExpected, query.oneSolution());
-
-	}
-
-	@Test
-	public final void testSemicolonStringPrologTermArray() {
-
-		builder.begin("big", bear).assertz();
-		builder.begin("big", elephant).assertz();
-		builder.begin("small", cat).assertz();
-		builder.begin("brown", bear).assertz();
-		builder.begin("black", cat).assertz();
-		builder.begin("gray", elephant).assertz();
-
-		assertFalse(builder.begin("dark", z).neck("black", z).semicolon("brown", z).clause());
-		builder.begin("dark", z).neck("black", z).semicolon("brown", z).assertz();
-		assertTrue(builder.begin("dark", z).neck("black", z).semicolon("brown", z).clause());
-
-		PrologQuery query = engine.query(darkX, bigX);
-		assertArrayEquals(bearExpected, query.oneSolution());
-
-	}
-
-	@Test
 	public final void testAsserta() {
 
 		assertFalse(builder.begin(bigBear).clause());
