@@ -19,6 +19,10 @@
  */
 package org.prolobjectlink.prolog.jpl.yap;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.prolobjectlink.prolog.Licenses;
 import org.prolobjectlink.prolog.PrologEngine;
 import org.prolobjectlink.prolog.PrologProvider;
@@ -49,6 +53,31 @@ public final class YapPrologEngine extends JplEngine implements PrologEngine {
 
 	public final String getName() {
 		return "SWI-Prolog";
+	}
+
+	public final List<String> verify() {
+		String slash = File.separator;
+		List<String> list = new ArrayList<String>();
+		String javaHome = System.getProperty("java.home");
+		String javaVersion = System.getProperty("java.version");
+		String pathSeparator = System.getProperty("path.separator");
+		if (runOnWindows()) {
+			list.add(javaHome.replace(slash + "jre", slash) + "/jdk" + javaVersion + "/bin" + pathSeparator);
+			list.add(javaHome.replace(slash + "jre", slash) + "/jdk" + javaVersion + "/lib/tools.jar" + pathSeparator);
+			list.add(
+					javaHome.replace(slash + "jre", slash) + "/jdk" + javaVersion + "/jre/lib/rt.jar;" + pathSeparator);
+			list.add("C:/Program Files/swipl/lib/jpl.jar" + pathSeparator);
+			list.add("C:/Program Files/swipl/bin");
+		} else if (runOnOsX()) {
+			// TODO environment routes for MacOSX
+		} else if (runOnLinux()) {
+			list.add("/usr/lib/jvm/java-" + javaVersion + "-openjdk-" + getArch() + "/bin" + pathSeparator);
+			list.add("/usr/lib/jvm/java-" + javaVersion + "-openjdk-" + getArch() + "/lib/tools.jar" + pathSeparator);
+			list.add("/usr/lib/jvm/java-" + javaVersion + "-openjdk-" + getArch() + "/jre/lib/rt.jar" + pathSeparator);
+			list.add("/usr/local/bin/swipl/lib/jpl.jar" + pathSeparator);
+			list.add("/usr/local/bin");
+		}
+		return list;
 	}
 
 }
