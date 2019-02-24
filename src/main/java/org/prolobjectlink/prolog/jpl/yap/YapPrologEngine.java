@@ -71,9 +71,9 @@ public final class YapPrologEngine extends JplEngine implements PrologEngine {
 		} else if (runOnOsX()) {
 			// TODO environment routes for MacOSX
 		} else if (runOnLinux()) {
-			list.add("/usr/lib/jvm/java-" + javaVersion + "-openjdk-" + getArch() + "/bin" + pathSeparator);
-			list.add("/usr/lib/jvm/java-" + javaVersion + "-openjdk-" + getArch() + "/lib/tools.jar" + pathSeparator);
-			list.add("/usr/lib/jvm/java-" + javaVersion + "-openjdk-" + getArch() + "/jre/lib/rt.jar" + pathSeparator);
+			list.add("/usr/lib/jvm/java-" + javaVersion + "-openjdk-" + getOsArch() + "/bin" + pathSeparator);
+			list.add("/usr/lib/jvm/java-" + javaVersion + "-openjdk-" + getOsArch() + "/lib/tools.jar" + pathSeparator);
+			list.add("/usr/lib/jvm/java-" + javaVersion + "-openjdk-" + getOsArch() + "/jre/lib/rt.jar" + pathSeparator);
 			list.add("/usr/local/bin/swipl/lib/jpl.jar" + pathSeparator);
 			list.add("/usr/local/bin");
 		}
