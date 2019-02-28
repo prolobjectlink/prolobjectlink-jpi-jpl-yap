@@ -37,7 +37,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.prolobjectlink.prolog.Licenses;
-import org.prolobjectlink.prolog.PredicateIndicator;
 import org.prolobjectlink.prolog.PrologAtom;
 import org.prolobjectlink.prolog.PrologEngine;
 import org.prolobjectlink.prolog.PrologList;
@@ -47,6 +46,7 @@ import org.prolobjectlink.prolog.PrologQuery;
 import org.prolobjectlink.prolog.PrologStructure;
 import org.prolobjectlink.prolog.PrologTerm;
 import org.prolobjectlink.prolog.PrologVariable;
+import org.prolobjectlink.prolog.jpl.JplIndicator;
 import org.prolobjectlink.prolog.jpl.JplOperator;
 import org.prolobjectlink.prolog.jpl.yap.YapPrologEngine;
 
@@ -1016,7 +1016,7 @@ public class PrologEngineTest extends PrologBaseTest {
 	@Test
 	public final void testCurrentPredicates() {
 		YapPrologEngine e = (YapPrologEngine) engine;
-		Set<PredicateIndicator> predicates = new HashSet<PredicateIndicator>();
+		Set<JplIndicator> predicates = new HashSet<JplIndicator>();
 		String consult5 = "consult('" + e.getCache() + "'),findall(X/Y,current_predicate(X/Y),L)";
 		PrologQuery query = e.query(consult5);
 		if (query.hasSolution()) {
@@ -1026,7 +1026,7 @@ public class PrologEngineTest extends PrologBaseTest {
 					if (term.isCompound()) {
 						int arity = term.getArity();
 						String functor = term.getFunctor();
-						PredicateIndicator pi = new PredicateIndicator(functor, arity);
+						JplIndicator pi = new JplIndicator(functor, arity);
 						predicates.add(pi);
 					}
 				}
