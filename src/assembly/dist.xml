@@ -28,6 +28,12 @@
 			<outputDirectory>bin</outputDirectory>
 		</fileSet>
 
+		<!-- demostration folder -->
+		<fileSet>
+			<directory>${project.basedir}/demo</directory>
+			<outputDirectory>demo</outputDirectory>
+		</fileSet>
+
 		<!-- api documentation -->
 		<fileSet>
 			<directory>${project.build.directory}/apidocs</directory>
@@ -54,7 +60,7 @@
 			<directory>${project.basedir}/lang</directory>
 			<outputDirectory>lang</outputDirectory>
 		</fileSet>
-		
+
 		<!-- harness prolog to java folder -->
 		<fileSet>
 			<directory>${project.basedir}/obj</directory>
