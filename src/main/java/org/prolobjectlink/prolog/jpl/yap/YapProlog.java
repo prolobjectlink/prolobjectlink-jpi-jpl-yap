@@ -27,6 +27,11 @@ import org.prolobjectlink.prolog.jpl.JplProvider;
 import jpl.JPL;
 import jpl.Term;
 
+/**
+ * 
+ * @author Jose Zalacain
+ * @since 1.0
+ */
 public class YapProlog extends JplProvider implements PrologProvider {
 
 	public YapProlog() {

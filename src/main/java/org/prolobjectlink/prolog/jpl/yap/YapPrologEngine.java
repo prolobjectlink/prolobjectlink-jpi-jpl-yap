@@ -32,6 +32,11 @@ import jpl.JPL;
 import jpl.Query;
 import jpl.Term;
 
+/**
+ * 
+ * @author Jose Zalacain
+ * @since 1.0
+ */
 public final class YapPrologEngine extends JplEngine implements PrologEngine {
 
 	YapPrologEngine(PrologProvider provider) {

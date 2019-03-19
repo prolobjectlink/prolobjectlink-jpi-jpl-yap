@@ -22,6 +22,11 @@ package org.prolobjectlink.prolog.jpl.yap;
 import org.prolobjectlink.prolog.AbstractConsole;
 import org.prolobjectlink.prolog.PrologConsole;
 
+/**
+ * 
+ * @author Jose Zalacain
+ * @since 1.0
+ */
 public class YapPrologConsole extends AbstractConsole implements PrologConsole {
 
 	public YapPrologConsole() {
