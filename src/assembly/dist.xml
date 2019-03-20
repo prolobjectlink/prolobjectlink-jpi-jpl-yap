@@ -57,8 +57,8 @@
 
 		<!-- prolog folder -->
 		<fileSet>
-			<directory>${project.basedir}/lang</directory>
-			<outputDirectory>lang</outputDirectory>
+			<directory>${project.basedir}/prt</directory>
+			<outputDirectory>prt</outputDirectory>
 		</fileSet>
 
 		<!-- harness prolog to java folder -->
