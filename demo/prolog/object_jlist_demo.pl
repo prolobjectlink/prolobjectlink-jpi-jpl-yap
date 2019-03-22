@@ -20,7 +20,7 @@
 
 % Author: Jose Zalacain
 
-:-consult('../../obj/prolobject.pl').
+:-consult('../../prt/prolog/awt/container.pl').
 :-consult('../../prt/prologx/swing/j_list.pl').
 :-consult('../../prt/prologx/swing/j_frame.pl').
 :-consult('../../prt/prologx/swing/default_list_model.pl').
@@ -28,20 +28,14 @@
 object_jlist_demo :-
     j_frame('modules', F),
     default_list_model(DLM),
-%    j_list(DML, L),
-    object_new('javax.swing.JList', [DLM], L),
+    j_list(DLM, L),
     j_frame_get_content_pane(F, CP),
-     
-%     interface can be generated too
-    object_call(CP, add, [L], _),
-    
-    
+    container_add(CP, L, _),
     (      	current_module(M),
-            object_call(DLM, addElement, [M], _),
+			default_list_model_add_element(DLM, M, _),
             fail
     ;       true
     ),
-    
 	j_frame_pack(F, _),
     j_frame_get_height(F, H),
     j_frame_set_size(F, 150, H, _),

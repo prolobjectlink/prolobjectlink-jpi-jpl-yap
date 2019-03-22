@@ -31,9 +31,9 @@ object_colour_choose_demo :-
     j_frame_set_visible(F, @(true), _),
     j_frame_to_front(F, _),
     j_frame_get_content_pane(F, CP),
-	color_pink(Pink),
+	color_PINK(PINK),
     j_color_chooser(C),
-    j_color_chooser_show_dialog(C, CP,'pick a colo(u)r',Pink, _),
+    j_color_chooser_show_dialog(C, CP,'pick a colo(u)r',PINK, _),
     j_frame_dispose(F, _),
     
     (       C == @(null)
