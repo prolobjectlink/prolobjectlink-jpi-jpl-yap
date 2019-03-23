@@ -20,23 +20,25 @@
 
 % Author: Jose Zalacain
 
+:-consult('../../obj/prolobject.pl').
 :-consult('../../prt/prolog/awt/color.pl').
 :-consult('../../prt/prologx/swing/j_frame.pl').
 :-consult('../../prt/prologx/swing/j_color_chooser.pl').
 
 object_colour_choose_demo :-
+	object_true(TRUE),
 	j_frame('frame with dialog', F),
-	j_frame_set_location(F, 400, 300,_),
-    j_frame_set_size(F, 400, 300, _),
-    j_frame_set_visible(F, @(true), _),
-    j_frame_to_front(F, _),
+	j_frame_set_location(F, 400, 300),
+    j_frame_set_size(F, 400, 300),
+    j_frame_set_visible(F, TRUE),
+    j_frame_to_front(F),
     j_frame_get_content_pane(F, CP),
 	color_PINK(PINK),
     j_color_chooser(C),
     j_color_chooser_show_dialog(C, CP,'pick a colo(u)r',PINK, _),
-    j_frame_dispose(F, _),
+    j_frame_dispose(F),
     
-    (       C == @(null)
+    (       object_is_null(C)
     ->      write('you cancelled')
     ;       write('you chose '), write(C)
     ),

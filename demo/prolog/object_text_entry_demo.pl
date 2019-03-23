@@ -20,20 +20,22 @@
 
 % Author: Jose Zalacain
 
+:-consult('../../obj/prolobject.pl').
 :-consult('../../prt/prologx/swing/j_frame.pl').
 :-consult('../../prt/prologx/swing/j_option_pane.pl').
 
 object_text_entry_demo :-
+	object_true(TRUE),
     j_frame('frame with dialog', F),
-    j_frame_set_location(F, 400, 300,_),
-    j_frame_set_size(F, 400, 300, _),
-    j_frame_set_visible(F, @(true), _),
-    j_frame_to_front(F, _),
+    j_frame_set_location(F, 400, 300),
+    j_frame_set_size(F, 400, 300),
+    j_frame_set_visible(F, TRUE),
+    j_frame_to_front(F),
     j_option_pane(O),
     j_option_pane_show_input_dialog(O, F,'type your name', N),
-    j_frame_dispose(F, _),
+    j_frame_dispose(F),
     
-    (       N == @(null)
+    (       object_is_null(N)
     ->      write('you cancelled')
     ;       write('you typed '), write(N)
     ),

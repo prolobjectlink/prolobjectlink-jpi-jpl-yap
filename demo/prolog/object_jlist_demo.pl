@@ -20,26 +20,28 @@
 
 % Author: Jose Zalacain
 
+:-consult('../../obj/prolobject.pl').
 :-consult('../../prt/prolog/awt/container.pl').
 :-consult('../../prt/prologx/swing/j_list.pl').
 :-consult('../../prt/prologx/swing/j_frame.pl').
 :-consult('../../prt/prologx/swing/default_list_model.pl').
 
 object_jlist_demo :-
+	object_true(TRUE),
     j_frame('modules', F),
     default_list_model(DLM),
     j_list(DLM, L),
     j_frame_get_content_pane(F, CP),
-    container_add(CP, L, _),
+    container_add(CP, L),
     (      	current_module(M),
-			default_list_model_add_element(DLM, M, _),
+			default_list_model_add_element(DLM, M),
             fail
     ;       true
     ),
-	j_frame_pack(F, _),
+	j_frame_pack(F),
     j_frame_get_height(F, H),
-    j_frame_set_size(F, 150, H, _),
-    j_frame_set_visible(F, @(true), _).
+    j_frame_set_size(F, 150, H),
+    j_frame_set_visible(F, TRUE).
 
 
 % this directive runs the above demo
