@@ -1,2 +1,2 @@
 #!/usr/bin/bash
-"$(dirname "$(pwd)")/bin/"pllink.sh -g
+java -classpath "$(pwd)/lib/*" org.prolobjectlink.prolog.jpl.yap.YapPrologConsole -g
