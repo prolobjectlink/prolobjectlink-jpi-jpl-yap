@@ -25,7 +25,6 @@ import java.util.List;
 
 import org.prolobjectlink.prolog.Licenses;
 import org.prolobjectlink.prolog.PrologEngine;
-import org.prolobjectlink.prolog.PrologProgrammer;
 import org.prolobjectlink.prolog.PrologProvider;
 import org.prolobjectlink.prolog.jpl.JplEngine;
 
@@ -46,10 +45,6 @@ public final class YapPrologEngine extends JplEngine implements PrologEngine {
 
 	YapPrologEngine(PrologProvider provider, String file) {
 		super(provider, file);
-	}
-
-	public final PrologProgrammer getProgrammer() {
-		return new YapPrologProgrammer(provider);
 	}
 
 	public final String getLicense() {
