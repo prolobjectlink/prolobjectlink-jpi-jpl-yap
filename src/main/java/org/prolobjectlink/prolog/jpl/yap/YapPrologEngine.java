@@ -37,13 +37,13 @@ import jpl.Term;
  * @author Jose Zalacain
  * @since 1.0
  */
-public final class YapPrologEngine extends JplEngine implements PrologEngine {
+public class YapPrologEngine extends JplEngine implements PrologEngine {
 
-	YapPrologEngine(PrologProvider provider) {
+	protected YapPrologEngine(PrologProvider provider) {
 		super(provider);
 	}
 
-	YapPrologEngine(PrologProvider provider, String file) {
+	protected YapPrologEngine(PrologProvider provider, String file) {
 		super(provider, file);
 	}
 
