@@ -112,7 +112,7 @@ public class PrologScriptEngineFactoryTest extends PrologBaseTest {
 
 	@Test
 	public void testGetMethodCallSyntax() {
-		assertEquals("bsf_invoke(Result, OBJ1, equals, [OBJ2]).", sef.getMethodCallSyntax("OBJ1", "equals", "OBJ2"));
+		assertEquals("jpl_call(OBJ1, equals, [OBJ2], Result).", sef.getMethodCallSyntax("OBJ1", "equals", "OBJ2"));
 	}
 
 }
