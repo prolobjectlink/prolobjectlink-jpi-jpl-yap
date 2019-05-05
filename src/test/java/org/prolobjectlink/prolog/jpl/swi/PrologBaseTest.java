@@ -22,6 +22,8 @@ package org.prolobjectlink.prolog.jpl.swi;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.script.ScriptEngineManager;
+
 import org.prolobjectlink.prolog.Prolog;
 import org.prolobjectlink.prolog.PrologAtom;
 import org.prolobjectlink.prolog.PrologDouble;
@@ -50,6 +52,7 @@ public abstract class PrologBaseTest {
 	protected String department = "department";
 
 	protected static final PrologProvider provider = Prolog.getProvider(YapProlog.class);
+	protected static final ScriptEngineManager manager = new ScriptEngineManager();
 
 	protected PrologTerm nil = provider.prologNil();
 	protected PrologTerm empty = provider.prologEmpty();
