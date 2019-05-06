@@ -85,7 +85,7 @@ public class PrologDoubleTest extends PrologBaseTest {
 
 	@Test
 	public final void testGetIntValue() {
-		assertEquals(1, double1.getIntValue());
+		assertEquals(1, double1.getIntegerValue());
 	}
 
 	@Test

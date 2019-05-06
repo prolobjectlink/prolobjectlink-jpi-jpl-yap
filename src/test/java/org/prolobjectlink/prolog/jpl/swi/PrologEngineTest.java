@@ -1052,7 +1052,7 @@ public class PrologEngineTest extends PrologBaseTest {
 						PrologTerm prio = operator.getArgument(0).getArgument(0);
 						PrologTerm pos = operator.getArgument(0).getArgument(1);
 						PrologTerm op = operator.getArgument(1);
-						int p = ((PrologNumber) prio).getIntValue();
+						int p = ((PrologNumber) prio).getIntegerValue();
 						String s = pos.getFunctor();
 						String n = op.getFunctor();
 

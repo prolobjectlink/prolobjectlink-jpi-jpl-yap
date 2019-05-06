@@ -91,7 +91,7 @@ public class PrologFloatTest extends PrologBaseTest {
 
 	@Test
 	public final void testGetIntValue() {
-		assertEquals(3, f.getIntValue());
+		assertEquals(3, f.getIntegerValue());
 	}
 
 	@Test

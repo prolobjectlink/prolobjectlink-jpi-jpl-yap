@@ -89,8 +89,8 @@ public abstract class PrologBaseTest {
 
 	protected PrologDouble gauss = provider.newDouble(.8346268);
 	protected PrologDouble aureo = provider.newDouble(1.6180339887);
-	protected PrologDouble pi = provider.newDouble(3.141592);
-	protected PrologFloat euler = provider.newFloat(2.71828);
+	protected PrologDouble pi = provider.newDouble(Math.PI);
+	protected PrologFloat euler = provider.newFloat(Math.E);
 
 	protected PrologAtom cat = provider.newAtom("cat");
 	protected PrologAtom bear = provider.newAtom("bear");

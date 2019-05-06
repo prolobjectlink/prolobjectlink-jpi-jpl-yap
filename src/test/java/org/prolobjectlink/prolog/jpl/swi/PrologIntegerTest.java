@@ -91,7 +91,7 @@ public class PrologIntegerTest extends PrologBaseTest {
 
 	@Test
 	public final void testGetIntValue() {
-		assertEquals(100, integer.getIntValue());
+		assertEquals(100, integer.getIntegerValue());
 	}
 
 	@Test
