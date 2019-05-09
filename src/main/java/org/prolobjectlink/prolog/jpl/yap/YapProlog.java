@@ -19,8 +19,6 @@
  */
 package org.prolobjectlink.prolog.jpl.yap;
 
-import javax.script.ScriptEngineFactory;
-
 import org.prolobjectlink.prolog.PrologConverter;
 import org.prolobjectlink.prolog.PrologEngine;
 import org.prolobjectlink.prolog.PrologJavaConverter;
@@ -52,10 +50,6 @@ public class YapProlog extends JplProvider implements PrologProvider {
 
 	public PrologJavaConverter getJavaConverter() {
 		return new YapPrologJavaConverter(this);
-	}
-
-	public ScriptEngineFactory getScriptFactory() {
-		return new YapPrologScriptFactory(newEngine());
 	}
 
 	public PrologEngine newEngine() {
