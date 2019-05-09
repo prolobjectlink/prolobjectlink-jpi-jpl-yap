@@ -50,10 +50,6 @@ public class YapPrologEngine extends JplEngine implements PrologEngine {
 		super(provider, file);
 	}
 
-	public final ScriptEngine getPrologScript() {
-		return new PrologScriptEngine(new YapPrologScriptFactory(this), this);
-	}
-
 	public final String getLicense() {
 		return Licenses.LGPL_V3;
 	}
@@ -80,13 +76,13 @@ public class YapPrologEngine extends JplEngine implements PrologEngine {
 					javaHome.replace(slash + "jre", slash) + "/jdk" + javaVersion + "/jre/lib/rt.jar;" + pathSeparator);
 			list.add("C:/Program Files/swipl/lib/jpl.jar" + pathSeparator);
 			list.add("C:/Program Files/swipl/bin");
-		} else if (runOnOsX()) {
+		} else if (runOnOSX()) {
 			// TODO environment routes for MacOSX
 		} else if (runOnLinux()) {
-			list.add("/usr/lib/jvm/java-" + javaVersion + "-openjdk-" + getOsArch() + "/bin" + pathSeparator);
-			list.add("/usr/lib/jvm/java-" + javaVersion + "-openjdk-" + getOsArch() + "/lib/tools.jar" + pathSeparator);
+			list.add("/usr/lib/jvm/java-" + javaVersion + "-openjdk-" + getOSArch() + "/bin" + pathSeparator);
+			list.add("/usr/lib/jvm/java-" + javaVersion + "-openjdk-" + getOSArch() + "/lib/tools.jar" + pathSeparator);
 			list.add(
-					"/usr/lib/jvm/java-" + javaVersion + "-openjdk-" + getOsArch() + "/jre/lib/rt.jar" + pathSeparator);
+					"/usr/lib/jvm/java-" + javaVersion + "-openjdk-" + getOSArch() + "/jre/lib/rt.jar" + pathSeparator);
 			list.add("/usr/local/bin/swipl/lib/jpl.jar" + pathSeparator);
 			list.add("/usr/local/bin");
 		}

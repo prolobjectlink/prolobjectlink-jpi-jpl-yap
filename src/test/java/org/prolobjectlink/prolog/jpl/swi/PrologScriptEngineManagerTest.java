@@ -1,3 +1,24 @@
+/*-
+ * #%L
+ * prolobjectlink-jpi-jlog
+ * %%
+ * Copyright (C) 2012 - 2019 Prolobjectlink Project
+ * %%
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation, either version 2 of the
+ * License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public
+ * License along with this program.  If not, see
+ * <http://www.gnu.org/licenses/gpl-2.0.html>.
+ * #L%
+ */
 package org.prolobjectlink.prolog.jpl.swi;
 
 import static org.junit.Assert.assertEquals;
@@ -19,34 +40,34 @@ public class PrologScriptEngineManagerTest extends PrologBaseTest {
 		ScriptEngineManager manager = new ScriptEngineManager();
 		ScriptEngine engine = manager.getEngineByName(provider.getName());
 		assertEquals(true, engine.eval("?- X is 5+3."));
-		assertEquals(provider.newInteger(8), engine.get("X"));
+		assertEquals(8, engine.get("X"));
 
 		engine = manager.getEngineByName("Prolog");
 		assertEquals(true, engine.eval("?- X is 5+3."));
-		assertEquals(provider.newInteger(8), engine.get("X"));
+		assertEquals(8, engine.get("X"));
 
 		engine = manager.getEngineByName("prolog");
 		assertEquals(true, engine.eval("?- X is 5+3."));
-		assertEquals(provider.newInteger(8), engine.get("X"));
+		assertEquals(8, engine.get("X"));
 
 		assertEquals(true, engine.eval(new FileReader("family.pl")));
 		assertEquals(true, engine.eval(new FileReader("company.pl")));
 		assertEquals(true, engine.eval(new FileReader("zoo.pl")));
 
 		assertEquals(true, engine.eval("?- parent( Parent, Child)"));
-		assertEquals(pam, engine.get("Parent"));
-		assertEquals(bob, engine.get("Child"));
+		assertEquals("pam", engine.get("Parent"));
+		assertEquals("bob", engine.get("Child"));
 
 		assertEquals(true,
 				engine.eval("?- employee(Name,Dpto,Scale),department(Dpto,DepartmentName),salary(Scale,Money)"));
-		assertEquals(mcardon, engine.get("Name"));
-		assertEquals(one, engine.get("Dpto"));
-		assertEquals(five, engine.get("Scale"));
-		assertEquals(board, engine.get("DepartmentName"));
-		assertEquals(threeThousand, engine.get("Money"));
+		assertEquals("mcardon", engine.get("Name"));
+		assertEquals(1, engine.get("Dpto"));
+		assertEquals(5, engine.get("Scale"));
+		assertEquals("board", engine.get("DepartmentName"));
+		assertEquals(3000, engine.get("Money"));
 
 		assertEquals(true, engine.eval("?- dark(Animal),big(Animal)"));
-		assertEquals(bear, engine.get("Animal"));
+		assertEquals("bear", engine.get("Animal"));
 
 	}
 
