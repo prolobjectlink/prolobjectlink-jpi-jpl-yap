@@ -25,12 +25,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.script.ScriptEngine;
-
 import org.prolobjectlink.prolog.Licenses;
 import org.prolobjectlink.prolog.PrologEngine;
 import org.prolobjectlink.prolog.PrologProvider;
-import org.prolobjectlink.prolog.PrologScriptEngine;
 import org.prolobjectlink.prolog.jpl.JplEngine;
 
 import jpl.JPL;
