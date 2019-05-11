@@ -28,12 +28,6 @@
 			<outputDirectory>bin</outputDirectory>
 		</fileSet>
 
-		<!-- demostration folder -->
-		<fileSet>
-			<directory>${project.basedir}/demo</directory>
-			<outputDirectory>demo</outputDirectory>
-		</fileSet>
-
 		<!-- api documentation -->
 		<fileSet>
 			<directory>${project.build.directory}/apidocs</directory>
@@ -55,18 +49,6 @@
 			<outputDirectory>etc</outputDirectory>
 		</fileSet>
 
-		<!-- prolog folder -->
-		<fileSet>
-			<directory>${project.basedir}/prt</directory>
-			<outputDirectory>prt</outputDirectory>
-		</fileSet>
-
-		<!-- harness prolog to java folder -->
-		<fileSet>
-			<directory>${project.basedir}/obj</directory>
-			<outputDirectory>obj</outputDirectory>
-		</fileSet>
-
 		<!-- source code folder -->
 		<fileSet>
 			<directory>${project.basedir}/src</directory>
@@ -80,15 +62,6 @@
 			</includes>
 		</fileSet>
 		
-		<!-- install scripts -->
-		<fileSet>
-			<directory>${project.basedir}</directory>
-			<outputDirectory>/</outputDirectory>
-			<includes>
-				<include>install.*</include>
-			</includes>
-		</fileSet>
-
 	</fileSets>
 	<dependencySets>
 		<dependencySet>
