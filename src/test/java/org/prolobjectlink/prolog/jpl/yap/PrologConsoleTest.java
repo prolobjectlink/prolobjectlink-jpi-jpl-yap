@@ -1,4 +1,4 @@
-/*-
+/*
  * #%L
  * prolobjectlink-jpi-jpl-yap
  * %%
@@ -21,14 +21,23 @@
  */
 package org.prolobjectlink.prolog.jpl.yap;
 
-import javax.script.ScriptEngineFactory;
+import static org.junit.Assert.assertEquals;
 
-import org.prolobjectlink.prolog.jpl.JplScriptFactory;
+import java.util.HashMap;
+import java.util.Map;
 
-public class YapPrologScriptFactory extends JplScriptFactory implements ScriptEngineFactory {
+import org.junit.Test;
+import org.prolobjectlink.prolog.jpl.yap.YapPrologConsole;
 
-	public YapPrologScriptFactory() {
-		super(new YapProlog().newEngine());
+public class PrologConsoleTest extends PrologBaseTest {
+
+	private YapPrologConsole console = new YapPrologConsole();
+
+	@Test
+	public final void testGetArguments() {
+		Map<String, String> m = new HashMap<String, String>();
+		m.put("-r", "./directory/file.pl");
+		assertEquals(m, console.getArguments(new String[] { "-r", "./directory/file.pl" }));
 	}
 
 }
