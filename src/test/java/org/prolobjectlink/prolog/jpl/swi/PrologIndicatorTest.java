@@ -1,7 +1,7 @@
 package org.prolobjectlink.prolog.jpl.swi;
 /*-
  * #%L
- * prolobjectlink-jpi-jpl-swi
+ * prolobjectlink-jpi-jpl-yap
  * %%
  * Copyright (C) 2012 - 2019 Prolobjectlink Project
  * %%
