@@ -32,7 +32,7 @@ import jpl.Term;
  * @author Jose Zalacain
  * @since 1.0
  */
-public class YapPrologConverter extends JplConverter implements PrologConverter<Term> {
+class YapPrologConverter extends JplConverter implements PrologConverter<Term> {
 
 	public PrologProvider createProvider() {
 		return new YapProlog(this);

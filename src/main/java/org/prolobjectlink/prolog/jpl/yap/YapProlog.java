@@ -46,7 +46,7 @@ public class YapProlog extends JplProvider implements PrologProvider {
 		JPL.loadNativeLibrary();
 	}
 
-	public YapProlog(PrologConverter<Term> converter) {
+	YapProlog(PrologConverter<Term> converter) {
 		super(converter);
 	}
 
