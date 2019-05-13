@@ -4,8 +4,44 @@ sudo: false
 addons:
   apt:
     packages:
-      - oracle-java8-installer
-      - oracle-java9-installer
+      - build-essential
+      - pkg-config
+      - ncurses-dev
+      - libreadline-dev
+      - libedit-dev
+      - libgmp-dev
+      - libssl-dev
+      - unixodbc-dev
+      - zlib1g-dev
+      - libarchive-dev
+      - libossp-uuid-dev
+      - libxext-dev
+      - libice-dev
+      - libjpeg-dev
+      - libxinerama-dev
+      - libxft-dev
+      - libxpm-dev
+      - libxt-dev
+      - libdb-dev
+      - libpcre3-dev
+      - libyaml-dev
+      - openjdk-8-jdk
+      - junit
+      - ninja-build
+  homebrew:
+    packages:
+      - cmake
+      - ninja
+      - gmp
+      - libarchive
+      - readline
+      - ossp-uuid
+      - openssl
+      - libyaml
+      - unixodbc
+      - berkeley-db
+      - pcre
+      - jpeg
 
 before_install:
   - wget https://archive.apache.org/dist/maven/maven-3/3.5.0/binaries/apache-maven-3.5.0-bin.zip
