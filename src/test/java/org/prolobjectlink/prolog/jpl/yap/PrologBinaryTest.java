@@ -36,8 +36,6 @@ import java.util.Properties;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.prolobjectlink.prolog.jpl.yap.YapProlog;
-import org.prolobjectlink.prolog.jpl.yap.YapPrologConsole;
 
 public class PrologBinaryTest extends PrologBaseTest {
 

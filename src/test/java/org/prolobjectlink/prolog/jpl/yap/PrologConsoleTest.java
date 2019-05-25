@@ -27,7 +27,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Test;
-import org.prolobjectlink.prolog.jpl.yap.YapPrologConsole;
 
 public class PrologConsoleTest extends PrologBaseTest {
 

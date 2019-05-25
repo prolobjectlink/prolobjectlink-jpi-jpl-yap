@@ -50,7 +50,6 @@ import org.prolobjectlink.prolog.PrologTerm;
 import org.prolobjectlink.prolog.PrologVariable;
 import org.prolobjectlink.prolog.jpl.JplIndicator;
 import org.prolobjectlink.prolog.jpl.JplOperator;
-import org.prolobjectlink.prolog.jpl.yap.YapPrologEngine;
 
 import jpl.JPL;
 import jpl.Query;
