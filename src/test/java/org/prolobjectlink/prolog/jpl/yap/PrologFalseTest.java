@@ -115,7 +115,7 @@ public class PrologFalseTest extends PrologBaseTest {
 
 	@Test
 	public final void testIsStructure() {
-		assertTrue(f.isStructure());
+		assertFalse(f.isStructure());
 	}
 
 	@Test
@@ -135,12 +135,12 @@ public class PrologFalseTest extends PrologBaseTest {
 
 	@Test
 	public void testIsAtomic() {
-		assertFalse(f.isAtomic());
+		assertTrue(f.isAtomic());
 	}
 
 	@Test
 	public void testIsCompound() {
-		assertTrue(f.isCompound());
+		assertFalse(f.isCompound());
 	}
 
 	@Test

@@ -64,7 +64,7 @@ public class PrologBinaryTest extends PrologBaseTest {
 		String script = bin.getProperty("Main.FileName");
 		assertEquals("pllink", script);
 		String main = bin.getProperty("Main.Class");
-		assertEquals(YapProlog.class.getName(), main);
+		assertEquals(YapPrologConsole.class.getName(), main);
 
 		//
 		String line = null;

@@ -27,7 +27,6 @@ import org.prolobjectlink.prolog.PrologJavaConverter;
 import org.prolobjectlink.prolog.PrologProvider;
 import org.prolobjectlink.prolog.jpl.JplProvider;
 
-import jpl.JPL;
 import jpl.Term;
 
 /**
@@ -39,11 +38,6 @@ public class YapProlog extends JplProvider implements PrologProvider {
 
 	public YapProlog() {
 		super(new YapPrologConverter());
-		JPL.setNativeLibraryName("libjpl.dll");
-		JPL.setNativeLibraryDir("C:\\Program Files\\Yap64\\bin");
-
-		JPL.setNativeLibraryPath("C:\\Program Files\\Yap64\\bin\\libjpl.dll");
-		JPL.loadNativeLibrary();
 	}
 
 	YapProlog(PrologConverter<Term> converter) {
@@ -58,9 +52,15 @@ public class YapProlog extends JplProvider implements PrologProvider {
 		return new YapPrologEngine(this);
 	}
 
+	public PrologEngine newEngine(String path) {
+		PrologEngine engine = newEngine();
+		engine.consult(path);
+		return engine;
+	}
+
 	@Override
 	public String toString() {
-		return "SwiPrologProvider [converter=" + converter + "]";
+		return "YapPrologProvider [converter=" + converter + "]";
 	}
 
 }

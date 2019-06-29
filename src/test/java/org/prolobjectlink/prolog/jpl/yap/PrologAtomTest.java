@@ -112,7 +112,7 @@ public class PrologAtomTest extends PrologBaseTest {
 
 	@Test
 	public final void testIsStructure() {
-		assertTrue(atom.isStructure());
+		assertFalse(atom.isStructure());
 	}
 
 	@Test
@@ -132,12 +132,12 @@ public class PrologAtomTest extends PrologBaseTest {
 
 	@Test
 	public final void testIsAtomic() {
-		assertFalse(atom.isAtomic());
+		assertTrue(atom.isAtomic());
 	}
 
 	@Test
 	public final void testIsCompound() {
-		assertTrue(atom.isCompound());
+		assertFalse(atom.isCompound());
 	}
 
 	@Test

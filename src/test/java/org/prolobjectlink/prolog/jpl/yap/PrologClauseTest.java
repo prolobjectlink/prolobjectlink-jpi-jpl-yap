@@ -29,7 +29,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Iterator;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.prolobjectlink.prolog.PrologClause;
 import org.prolobjectlink.prolog.PrologEngine;
@@ -42,11 +41,7 @@ public class PrologClauseTest extends PrologBaseTest {
 	PrologEngine e = provider.newEngine();
 
 	@Test
-	@Ignore
 	public void testHashCode() {
-
-		// this test case depend of correct variable name
-		// swi-prolog lost variable name in memory
 
 		engine.assertz(provider.newStructure(parent, tom, bob));
 		engine.assertz(provider.newStructure(grandparent, x, z), provider.newStructure(parent, x, y),
@@ -251,15 +246,10 @@ public class PrologClauseTest extends PrologBaseTest {
 	}
 
 	@Test
-	@Ignore
 	public void testToString() {
-
-		// this test case depend of correct variable name
-		// swi-prolog lost variable name in memory
-
 		engine.assertz(provider.newStructure(grandparent, x, z), provider.newStructure(parent, x, y),
 				provider.newStructure(parent, y, z));
-		assertEquals("grandparent(X,Z):-\n\tparent(X,Y),\n\tparent(Y,Z).", engine.iterator().next().toString());
+		assertEquals("grandparent(X, Z):-\n\tparent(X, Y),\n\tparent(Y, Z).", engine.iterator().next().toString());
 	}
 
 }

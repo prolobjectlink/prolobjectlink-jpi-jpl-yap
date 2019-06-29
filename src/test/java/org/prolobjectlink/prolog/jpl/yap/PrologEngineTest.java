@@ -41,8 +41,7 @@ import org.junit.Test;
 import org.prolobjectlink.prolog.Licenses;
 import org.prolobjectlink.prolog.PrologAtom;
 import org.prolobjectlink.prolog.PrologEngine;
-import org.prolobjectlink.prolog.PrologList;
-import org.prolobjectlink.prolog.PrologNumber;
+import org.prolobjectlink.prolog.PrologIndicator;
 import org.prolobjectlink.prolog.PrologOperator;
 import org.prolobjectlink.prolog.PrologQuery;
 import org.prolobjectlink.prolog.PrologStructure;
@@ -1016,23 +1015,26 @@ public class PrologEngineTest extends PrologBaseTest {
 
 	@Test
 	public final void testCurrentPredicates() {
+		String KEY = "X";
 		YapPrologEngine e = (YapPrologEngine) engine;
-		Set<JplIndicator> predicates = new HashSet<JplIndicator>();
-		String consult5 = "consult('" + e.getCache() + "'),findall(X/Y,current_predicate(X/Y),L)";
-		PrologQuery query = e.query(consult5);
+		Set<PrologIndicator> predicates = new HashSet<PrologIndicator>();
+		String opQuery = "consult('" + e.getCache() + "')," + "findall(X/Y,current_predicate(X/Y)," + KEY + ")";
+		Query query = new Query(opQuery);
 		if (query.hasSolution()) {
-			Map<String, PrologTerm>[] s = query.allVariablesSolutions();
-			for (Map<String, PrologTerm> map : s) {
-				for (PrologTerm term : map.values()) {
-					if (term.isCompound()) {
-						int arity = term.getArity();
-						String functor = term.getFunctor();
-						JplIndicator pi = new JplIndicator(functor, arity);
-						predicates.add(pi);
-					}
-				}
+			Term term = (Term) query.oneSolution().get(KEY);
+			Term[] termArray = term.toTermArray();
+			for (Term t : termArray) {
+				Term f = t.arg(1);
+				Term a = t.arg(2);
+
+				int arity = a.intValue();
+				String functor = f.name();
+
+				JplIndicator pi = new JplIndicator(functor, arity);
+				predicates.add(pi);
 			}
 		}
+		query.close();
 		assertEquals(predicates, engine.currentPredicates());
 	}
 
@@ -1040,29 +1042,25 @@ public class PrologEngineTest extends PrologBaseTest {
 	public final void testCurrentOperators() {
 		Set<PrologOperator> operators = new HashSet<PrologOperator>();
 		String key = "LIST";
-		PrologEngine engine = provider.newEngine();
-		String stringQuery = "findall(P/S/O,current_op(P,S,O)," + key + ")";
-		PrologQuery query = engine.query(stringQuery);
-		Map<String, PrologTerm>[] solution = query.allVariablesSolutions();
-		for (Map<String, PrologTerm> map : solution) {
-			for (PrologTerm operatorList : map.values()) {
-				if (!operatorList.isVariable() && operatorList.isList()) {
-					PrologList l = (PrologList) operatorList;
-					for (PrologTerm operator : l) {
+		String opQuery = "findall(P/S/O,current_op(P,S,O)," + key + ")";
+		Query query = new Query(opQuery);
+		if (query.hasSolution()) {
+			Term term = (Term) query.oneSolution().get(key);
+			Term[] termArray = term.toTermArray();
+			for (Term t : termArray) {
+				Term prio = t.arg(1).arg(1);
+				Term pos = t.arg(1).arg(2);
+				Term op = t.arg(2);
 
-						PrologTerm prio = operator.getArgument(0).getArgument(0);
-						PrologTerm pos = operator.getArgument(0).getArgument(1);
-						PrologTerm op = operator.getArgument(1);
-						int p = ((PrologNumber) prio).getIntegerValue();
-						String s = pos.getFunctor();
-						String n = op.getFunctor();
+				int p = prio.intValue();
+				String s = pos.name();
+				String n = op.name();
 
-						PrologOperator o = new JplOperator(p, s, n);
-						operators.add(o);
-					}
-				}
+				PrologOperator o = new JplOperator(p, s, n);
+				operators.add(o);
 			}
 		}
+		query.close();
 		assertEquals(operators, engine.currentOperators());
 	}
 
@@ -1288,14 +1286,14 @@ public class PrologEngineTest extends PrologBaseTest {
 
 	@Test
 	public final void testGetVersion() {
-		Term swi = (Term) new Query("current_prolog_flag(version_data,Swi)").oneSolution().get("Swi");
-		String version = "" + swi.arg(1) + "." + swi.arg(2) + "." + swi.arg(3) + " (JPL v" + JPL.version_string() + ")";
+		Term yap = (Term) new Query("current_prolog_flag(version_data,Yap)").oneSolution().get("Yap");
+		String version = "" + yap.arg(1) + "." + yap.arg(2) + "." + yap.arg(3) + " (JPL v" + JPL.version_string() + ")";
 		assertEquals(version, engine.getVersion());
 	}
 
 	@Test
 	public final void testGetName() {
-		assertEquals("SWI-Prolog", engine.getName());
+		assertEquals("YapProlog", engine.getName());
 	}
 
 	@Test

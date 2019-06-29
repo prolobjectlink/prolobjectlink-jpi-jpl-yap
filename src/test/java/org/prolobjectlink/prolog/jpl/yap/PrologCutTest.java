@@ -113,7 +113,7 @@ public class PrologCutTest extends PrologBaseTest {
 
 	@Test
 	public final void testIsStructure() {
-		assertTrue(cut.isStructure());
+		assertFalse(cut.isStructure());
 	}
 
 	@Test
@@ -133,12 +133,12 @@ public class PrologCutTest extends PrologBaseTest {
 
 	@Test
 	public void testIsAtomic() {
-		assertFalse(cut.isAtomic());
+		assertTrue(cut.isAtomic());
 	}
 
 	@Test
 	public void testIsCompound() {
-		assertTrue(cut.isCompound());
+		assertFalse(cut.isCompound());
 	}
 
 	@Test

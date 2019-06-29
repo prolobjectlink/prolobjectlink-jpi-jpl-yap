@@ -132,7 +132,7 @@ public class PrologNilTest extends PrologBaseTest {
 
 	@Test
 	public final void testIsStructure() {
-		assertTrue(nil.isStructure());
+		assertFalse(nil.isStructure());
 	}
 
 	@Test
@@ -152,12 +152,12 @@ public class PrologNilTest extends PrologBaseTest {
 
 	@Test
 	public final void testIsAtomic() {
-		assertFalse(nil.isAtomic());
+		assertTrue(nil.isAtomic());
 	}
 
 	@Test
 	public final void testIsCompound() {
-		assertTrue(nil.isCompound());
+		assertFalse(nil.isCompound());
 	}
 
 	@Test

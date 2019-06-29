@@ -54,12 +54,12 @@ public class YapPrologEngine extends JplEngine implements PrologEngine {
 	}
 
 	public final String getVersion() {
-		Term swi = (Term) new Query("current_prolog_flag(version_data,Swi)").oneSolution().get("Swi");
-		return "" + swi.arg(1) + "." + swi.arg(2) + "." + swi.arg(3) + " (JPL v" + JPL.version_string() + ")";
+		Term yap = (Term) new Query("current_prolog_flag(version_data,Yap)").oneSolution().get("Yap");
+		return "" + yap.arg(1) + "." + yap.arg(2) + "." + yap.arg(3) + " (JPL v" + JPL.version_string() + ")";
 	}
 
 	public final String getName() {
-		return "SWI-Prolog";
+		return "YapProlog";
 	}
 
 	public final List<String> verify() {
