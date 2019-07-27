@@ -49,6 +49,19 @@ before_install:
   - export M2_HOME=$PWD/apache-maven-3.5.0
   - export PATH=$M2_HOME/bin:$PATH
   - echo "MAVEN_OPTS='-Dmaven.repo.local=$HOME/.m2/repository -Xmx1g -Dorg.slf4j.simpleLogger.showDateTime=true -Dorg.slf4j.simpleLogger.dateTimeFormat=HH:mm:ss:SSS'" > ~/.mavenrc
+  - wget https://www.swi-prolog.org/download/stable/src/pl-6.6.6.tar.gz
+  - tar -xzvf pl-6.6.6.tar.gz
+  - cd pl-6.6.6
+  - cp build.templ build.sh
+  - ./build.sh
+  - cd ..
+  - export PATH=$PATH:/home/bin
+  - export PATH=$PATH:/home/lib/amd64
+  - export PATH=$PATH:/home/lib/jpl.jar
+  - export PATH=$PATH:/usr/lib/jvm/java-8-openjdk-amd64/bin
+  - export PATH=$PATH:/usr/lib/jvm/java-8-openjdk-amd64/lib/tools.jar
+  - export PATH=$PATH:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/rt.jar
+  - export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/amd64/server
 
 install:
   -
@@ -60,10 +73,10 @@ matrix:
       env:
       - DESC="Install Java 8"
       - CMD="mvn clean install site"
-   -  jdk: oraclejdk9
-      env:
-      - DESC="Install Java 9"
-      - CMD="mvn clean install site"
+         
+after_success:
+  - echo "<settings><servers><server><id>ossrh</id><username>\${env.OSSRH_USER}</username><password>\${env.OSSRH_PASS}</password></server></servers></settings>" > ~/settings.xml
+  - mvn deploy --settings ~/settings.xml
 
 script: eval travis_wait 35 $CMD
 
