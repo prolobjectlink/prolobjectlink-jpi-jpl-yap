@@ -49,19 +49,31 @@ before_install:
   - export M2_HOME=$PWD/apache-maven-3.5.0
   - export PATH=$M2_HOME/bin:$PATH
   - echo "MAVEN_OPTS='-Dmaven.repo.local=$HOME/.m2/repository -Xmx1g -Dorg.slf4j.simpleLogger.showDateTime=true -Dorg.slf4j.simpleLogger.dateTimeFormat=HH:mm:ss:SSS'" > ~/.mavenrc
+  - export JAVA_HOME=/usr/lib/jvm/java-8-oracle
+  - echo $JAVA_HOME
+  - sudo touch /etc/ld.so.conf.d/java.conf
+  - echo $JAVA_HOME/jre/lib/amd64 | sudo tee -a /etc/ld.so.conf.d/java.conf
+  - echo $JAVA_HOME/jre/lib/amd64/server | sudo tee -a /etc/ld.so.conf.d/java.conf
+  - sudo ldconfig
+  - export PATH=$PATH:$JAVA_HOME/bin
+  - export CLASSPATH=$CLASSPATH:$JAVA_HOME/lib/tools.jar
+  - export CLASSPATH=$CLASSPATH:$JAVA_HOME/jre/lib/rt.jar
   - wget https://www.swi-prolog.org/download/stable/src/pl-6.6.6.tar.gz
   - tar -xzvf pl-6.6.6.tar.gz
   - cd pl-6.6.6
-  - cp build.templ build.sh
-  - ./build.sh
+  - ./configure --with-world
+  - make
+  - sudo make install
+  - cd packages/jpl
+  - ./configure
+  - make
+  - export SWI_HOME=/home/travis/build/prolobjectlink/prolobjectlink-jpi-jpl-swi/pl-6.6.6
+  - export PATH=$PATH:$SWI_HOME/bin
+  - export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/travis/build/prolobjectlink/prolobjectlink-jpi-jpl-swi/pl-6.6.6/packages/jpl
+  - export CLASSPATH=$CLASSPATH:/home/travis/build/prolobjectlink/prolobjectlink-jpi-jpl-swi/pl-6.6.6/packages/jpl/jpl.jar
   - cd ..
-  - export PATH=$PATH:/home/bin
-  - export PATH=$PATH:/home/lib/amd64
-  - export PATH=$PATH:/home/lib/jpl.jar
-  - export PATH=$PATH:/usr/lib/jvm/java-8-openjdk-amd64/bin
-  - export PATH=$PATH:/usr/lib/jvm/java-8-openjdk-amd64/lib/tools.jar
-  - export PATH=$PATH:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/rt.jar
-  - export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/amd64/server
+  - cd ..
+  - cd ..
 
 install:
   -
