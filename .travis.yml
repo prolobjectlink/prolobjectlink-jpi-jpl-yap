@@ -67,11 +67,10 @@ before_install:
   - cd packages/jpl
   - ./configure
   - make
-  - pwd
-  - export SWI_HOME=/home/travis/build/prolobjectlink/prolobjectlink-jpi-jpl-swi/pl-6.6.6
+  - export SWI_HOME=/home/travis/build/prolobjectlink/prolobjectlink-jpi-jpl-yap/pl-6.6.6
   - export PATH=$PATH:$SWI_HOME/bin
-  - export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/travis/build/prolobjectlink/prolobjectlink-jpi-jpl-swi/pl-6.6.6/packages/jpl
-  - export CLASSPATH=$CLASSPATH:/home/travis/build/prolobjectlink/prolobjectlink-jpi-jpl-swi/pl-6.6.6/packages/jpl/jpl.jar
+  - export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/travis/build/prolobjectlink/prolobjectlink-jpi-jpl-yap/pl-6.6.6/packages/jpl
+  - export CLASSPATH=$CLASSPATH:/home/travis/build/prolobjectlink/prolobjectlink-jpi-jpl-yap/pl-6.6.6/packages/jpl/jpl.jar
   - cd ..
   - cd ..
   - cd ..
