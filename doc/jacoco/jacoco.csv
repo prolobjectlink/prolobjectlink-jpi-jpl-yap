@@ -1,0 +1,7 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+prolobjectlink-jpi-jpl-yap,org.prolobjectlink.prolog.jpl.yap,YapPrologConverter,0,8,0,0,0,2,0,2,0,2
+prolobjectlink-jpi-jpl-yap,org.prolobjectlink.prolog.jpl.yap,YapPrologEngine,204,46,6,0,23,6,5,4,2,4
+prolobjectlink-jpi-jpl-yap,org.prolobjectlink.prolog.jpl.yap,YapPrologJavaConverter,0,4,0,0,0,2,0,1,0,1
+prolobjectlink-jpi-jpl-yap,org.prolobjectlink.prolog.jpl.yap,YapPrologScriptFactory,0,7,0,0,0,2,0,1,0,1
+prolobjectlink-jpi-jpl-yap,org.prolobjectlink.prolog.jpl.yap,YapProlog,20,20,0,0,4,6,2,4,2,4
+prolobjectlink-jpi-jpl-yap,org.prolobjectlink.prolog.jpl.yap,YapPrologConsole,6,6,0,0,2,2,1,1,1,1

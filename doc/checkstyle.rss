@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<rss version="0.91">
+  <channel>
+    <title>prolobjectlink-jpi-jpl-yap - Checkstyle report</title>
+    <link>https://github.com/prolobjectlink/prolobjectlink-jpi-jpl-yap</link>
+    <description>prolobjectlink-jpi-jpl-yap - Checkstyle report</description>
+    <language>en-us</language>
+    <copyright>&#169;2012 - 2019 Prolobjectlink Project</copyright>
+    <item>
+      <title>File: 6,
+             Errors: 137,
+             Warnings: 0,
+             Infos: 0
+      </title>
+            <link>https://github.com/prolobjectlink/prolobjectlink-jpi-jpl-yap/checkstyle.html</link>
+      <description>
+        <p>Click <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jpl-yap/checkstyle.html">here</a> for the full Checkstyle report.</p>
+
+        <table summary="Files" boder="1">
+          <thead>
+            <tr>
+              <th>Files</th>
+              <th style="width:30px;"><abbr title="Info">I</abbr></th>
+              <th style="width:30px;"><abbr title="Warning">W</abbr></th>
+              <th style="width:30px;"><abbr title="Error">E</abbr></th>
+            </tr>
+          </thead>
+          <tbody>
+                          <tr>
+                <td>
+                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jpl-yap/checkstyle.html#org.prolobjectlink.prolog.jpl.yap.YapPrologConverter.java">org/prolobjectlink/prolog/jpl/yap/YapPrologConverter.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  7
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jpl-yap/checkstyle.html#org.prolobjectlink.prolog.jpl.yap.YapPrologJavaConverter.java">org/prolobjectlink/prolog/jpl/yap/YapPrologJavaConverter.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  9
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jpl-yap/checkstyle.html#org.prolobjectlink.prolog.jpl.yap.YapPrologEngine.java">org/prolobjectlink/prolog/jpl/yap/YapPrologEngine.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  65
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jpl-yap/checkstyle.html#org.prolobjectlink.prolog.jpl.yap.YapPrologScriptFactory.java">org/prolobjectlink/prolog/jpl/yap/YapPrologScriptFactory.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  8
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jpl-yap/checkstyle.html#org.prolobjectlink.prolog.jpl.yap.YapPrologConsole.java">org/prolobjectlink/prolog/jpl/yap/YapPrologConsole.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  12
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jpl-yap/checkstyle.html#org.prolobjectlink.prolog.jpl.yap.YapProlog.java">org/prolobjectlink/prolog/jpl/yap/YapProlog.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  36
+                </td>
+              </tr>
+                      </tbody>
+        </table>
+        
+      </description>
+    </item>
+  </channel>
+</rss>
+

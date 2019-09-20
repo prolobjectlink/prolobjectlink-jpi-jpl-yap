@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>YapProlog.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">prolobjectlink-jpi-jpl-yap</a> &gt; <a href="index.source.html" class="el_package">org.prolobjectlink.prolog.jpl.yap</a> &gt; <span class="el_source">YapProlog.java</span></div><h1>YapProlog.java</h1><pre class="source lang-java linenums">/*
+ * #%L
+ * prolobjectlink-jpi-jpl-yap
+ * %%
+ * Copyright (C) 2019 Prolobjectlink Project
+ * %%
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 2.1 of the
+ * License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Lesser Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Lesser Public
+ * License along with this program.  If not, see
+ * &lt;http://www.gnu.org/licenses/lgpl-2.1.html&gt;.
+ * #L%
+ */
+package org.prolobjectlink.prolog.jpl.yap;
+
+import org.prolobjectlink.prolog.PrologConverter;
+import org.prolobjectlink.prolog.PrologEngine;
+import org.prolobjectlink.prolog.PrologJavaConverter;
+import org.prolobjectlink.prolog.PrologProvider;
+import org.prolobjectlink.prolog.jpl.JplProvider;
+
+import jpl.Term;
+
+/**
+ * 
+ * @author Jose Zalacain
+ * @since 1.0
+ */
+public class YapProlog extends JplProvider implements PrologProvider {
+
+	public YapProlog() {
+<span class="fc" id="L40">		super(new YapPrologConverter());</span>
+<span class="fc" id="L41">	}</span>
+
+	YapProlog(PrologConverter&lt;Term&gt; converter) {
+<span class="fc" id="L44">		super(converter);</span>
+<span class="fc" id="L45">	}</span>
+
+	public PrologJavaConverter getJavaConverter() {
+<span class="fc" id="L48">		return new YapPrologJavaConverter(this);</span>
+	}
+
+	public PrologEngine newEngine() {
+<span class="fc" id="L52">		return new YapPrologEngine(this);</span>
+	}
+
+	public PrologEngine newEngine(String path) {
+<span class="nc" id="L56">		PrologEngine engine = newEngine();</span>
+<span class="nc" id="L57">		engine.consult(path);</span>
+<span class="nc" id="L58">		return engine;</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="nc" id="L63">		return &quot;YapPrologProvider [converter=&quot; + converter + &quot;]&quot;;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>
