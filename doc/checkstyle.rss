@@ -29,7 +29,21 @@
           <tbody>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jpl-yap/checkstyle.html#org.prolobjectlink.prolog.jpl.yap.YapPrologConverter.java">org/prolobjectlink/prolog/jpl/yap/YapPrologConverter.java</a>
+                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jpl-yap/checkstyle.html#io.github.prolobjectlink.prolog.jpl.yap.YapProlog.java">io/github/prolobjectlink/prolog/jpl/yap/YapProlog.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  36
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jpl-yap/checkstyle.html#io.github.prolobjectlink.prolog.jpl.yap.YapPrologConverter.java">io/github/prolobjectlink/prolog/jpl/yap/YapPrologConverter.java</a>
                 </td>
                 <td>
                   0
@@ -43,35 +57,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jpl-yap/checkstyle.html#org.prolobjectlink.prolog.jpl.yap.YapPrologJavaConverter.java">org/prolobjectlink/prolog/jpl/yap/YapPrologJavaConverter.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  9
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jpl-yap/checkstyle.html#org.prolobjectlink.prolog.jpl.yap.YapPrologEngine.java">org/prolobjectlink/prolog/jpl/yap/YapPrologEngine.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  65
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jpl-yap/checkstyle.html#org.prolobjectlink.prolog.jpl.yap.YapPrologScriptFactory.java">org/prolobjectlink/prolog/jpl/yap/YapPrologScriptFactory.java</a>
+                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jpl-yap/checkstyle.html#io.github.prolobjectlink.prolog.jpl.yap.YapPrologScriptFactory.java">io/github/prolobjectlink/prolog/jpl/yap/YapPrologScriptFactory.java</a>
                 </td>
                 <td>
                   0
@@ -85,7 +71,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jpl-yap/checkstyle.html#org.prolobjectlink.prolog.jpl.yap.YapPrologConsole.java">org/prolobjectlink/prolog/jpl/yap/YapPrologConsole.java</a>
+                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jpl-yap/checkstyle.html#io.github.prolobjectlink.prolog.jpl.yap.YapPrologConsole.java">io/github/prolobjectlink/prolog/jpl/yap/YapPrologConsole.java</a>
                 </td>
                 <td>
                   0
@@ -99,7 +85,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jpl-yap/checkstyle.html#org.prolobjectlink.prolog.jpl.yap.YapProlog.java">org/prolobjectlink/prolog/jpl/yap/YapProlog.java</a>
+                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jpl-yap/checkstyle.html#io.github.prolobjectlink.prolog.jpl.yap.YapPrologEngine.java">io/github/prolobjectlink/prolog/jpl/yap/YapPrologEngine.java</a>
                 </td>
                 <td>
                   0
@@ -108,7 +94,21 @@
                   0
                 </td>
                 <td>
-                  36
+                  65
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jpl-yap/checkstyle.html#io.github.prolobjectlink.prolog.jpl.yap.YapPrologJavaConverter.java">io/github/prolobjectlink/prolog/jpl/yap/YapPrologJavaConverter.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  9
                 </td>
               </tr>
                       </tbody>

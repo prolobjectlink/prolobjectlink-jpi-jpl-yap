@@ -212,7 +212,7 @@
 						<manifest>
 							<addClasspath>true</addClasspath>
 							<mainClass>
-								org.prolobjectlink.prolog.jpl.yap.YapPrologConsole
+								io.github.prolobjectlink.prolog.jpl.yap.YapPrologConsole
 							</mainClass>
 						</manifest>
 						<manifestEntries>
