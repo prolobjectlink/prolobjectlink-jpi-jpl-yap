@@ -56,6 +56,10 @@ public class YapPrologEngine extends JplEngine implements PrologEngine {
 		Term yap = (Term) new Query("current_prolog_flag(version_data,Yap)").oneSolution().get("Yap");
 		return "" + yap.arg(1) + "." + yap.arg(2) + "." + yap.arg(3) + " (JPL v" + JPL.version_string() + ")";
 	}
+	
+	public final String getVendor() {
+		return "YapProlog";
+	}
 
 	public final String getName() {
 		return "YapProlog";
