@@ -34,7 +34,6 @@ import io.github.prolobjectlink.prolog.PrologInteger;
 import io.github.prolobjectlink.prolog.PrologProvider;
 import io.github.prolobjectlink.prolog.PrologTerm;
 import io.github.prolobjectlink.prolog.PrologVariable;
-import io.github.prolobjectlink.prolog.jpl.yap.YapProlog;
 
 /** @author Jose Zalacain @since 1.0 */
 public abstract class PrologBaseTest {
@@ -53,7 +52,7 @@ public abstract class PrologBaseTest {
 	protected String employee = "employee";
 	protected String department = "department";
 
-	protected static final PrologProvider provider = Prolog.getProvider(YapProlog.class);
+	protected static final PrologProvider provider = Prolog.getInstance();
 	protected static final ScriptEngineManager manager = new ScriptEngineManager();
 
 	protected PrologTerm nil = provider.prologNil();
