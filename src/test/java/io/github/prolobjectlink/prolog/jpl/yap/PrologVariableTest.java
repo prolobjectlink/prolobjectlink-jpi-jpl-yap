@@ -31,7 +31,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import io.github.prolobjectlink.prolog.IndicatorError;
+import io.github.prolobjectlink.prolog.FunctorError;
 import io.github.prolobjectlink.prolog.PrologAtom;
 import io.github.prolobjectlink.prolog.PrologDouble;
 import io.github.prolobjectlink.prolog.PrologFloat;
@@ -78,7 +78,7 @@ public class PrologVariableTest extends PrologBaseTest {
 		assertEquals("Y", variable.getName());
 	}
 
-	@Test(expected = IndicatorError.class)
+	@Test(expected = FunctorError.class)
 	public final void testGetKey() {
 		variable.getIndicator();
 	}
