@@ -2,6 +2,6 @@ GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_
 prolobjectlink-jpi-jpl-yap,io.github.prolobjectlink.prolog.jpl.yap,YapPrologConverter,0,8,0,0,0,2,0,2,0,2
 prolobjectlink-jpi-jpl-yap,io.github.prolobjectlink.prolog.jpl.yap,YapPrologConsole,6,6,0,0,2,2,1,1,1,1
 prolobjectlink-jpi-jpl-yap,io.github.prolobjectlink.prolog.jpl.yap,YapPrologScriptFactory,0,7,0,0,0,2,0,1,0,1
-prolobjectlink-jpi-jpl-yap,io.github.prolobjectlink.prolog.jpl.yap,YapPrologEngine,204,46,6,0,23,6,5,4,2,4
+prolobjectlink-jpi-jpl-yap,io.github.prolobjectlink.prolog.jpl.yap,YapPrologEngine,206,46,6,0,24,6,6,4,3,4
 prolobjectlink-jpi-jpl-yap,io.github.prolobjectlink.prolog.jpl.yap,YapProlog,20,20,0,0,4,6,2,4,2,4
 prolobjectlink-jpi-jpl-yap,io.github.prolobjectlink.prolog.jpl.yap,YapPrologJavaConverter,0,4,0,0,0,2,0,1,0,1
