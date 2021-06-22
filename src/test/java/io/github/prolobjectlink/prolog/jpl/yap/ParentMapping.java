@@ -21,11 +21,11 @@
  */
 package io.github.prolobjectlink.prolog.jpl.yap;
 
-import io.github.prolobjectlink.prolog.PrologMapping;
+import io.github.prolobjectlink.prolog.Prologable;
 import io.github.prolobjectlink.prolog.PrologProvider;
 import io.github.prolobjectlink.prolog.PrologTerm;
 
-public class ParentMapping implements PrologMapping<Parent> {
+public class ParentMapping implements Prologable<Parent> {
 
 	@Override
 	public Parent fromTerm(PrologProvider provider, PrologTerm t) {
