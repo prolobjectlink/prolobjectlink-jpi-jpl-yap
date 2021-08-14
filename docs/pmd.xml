@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pmd version="4.2.5" timestamp="2021-06-22T15:00:51.050">
+<pmd version="4.2.5" timestamp="2021-08-14T06:57:57.718">
 <file name="C:\Users\Jose Zalacain\Documents\eclipse-java-photon-workspace\prolobjectlink-jpi-jpl-yap\src\main\java\io\github\prolobjectlink\prolog\jpl\yap\YapPrologEngine.java">
 <violation beginline="81" endline="83" begincolumn="40" endcolumn="17" rule="EmptyIfStmt" ruleset="Basic Rules" package="io.github.prolobjectlink.prolog.jpl.yap" class="YapPrologEngine" method="verify" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
 Avoid empty if statements
