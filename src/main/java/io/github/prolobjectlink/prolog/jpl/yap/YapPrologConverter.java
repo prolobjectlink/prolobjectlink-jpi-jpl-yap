@@ -37,4 +37,9 @@ class YapPrologConverter extends JplConverter implements PrologConverter<Term> {
 		return new YapProlog(this);
 	}
 
+	@Override
+	public String toString() {
+		return "YapPrologConverter";
+	}
+
 }

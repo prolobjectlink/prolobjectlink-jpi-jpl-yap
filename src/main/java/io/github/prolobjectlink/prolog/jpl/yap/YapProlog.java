@@ -59,7 +59,7 @@ public class YapProlog extends JplProvider implements PrologProvider {
 
 	@Override
 	public String toString() {
-		return "YapPrologProvider [converter=" + converter + "]";
+		return "YapProlog [converter=" + converter + "]";
 	}
 
 }
