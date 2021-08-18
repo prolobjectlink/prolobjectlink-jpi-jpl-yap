@@ -47,7 +47,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import io.github.prolobjectlink.prolog.PrologAtom;
-import io.github.prolobjectlink.prolog.PrologClass;
 import io.github.prolobjectlink.prolog.PrologEngine;
 import io.github.prolobjectlink.prolog.PrologEntry;
 import io.github.prolobjectlink.prolog.PrologFloat;
@@ -56,7 +55,6 @@ import io.github.prolobjectlink.prolog.PrologInteger;
 import io.github.prolobjectlink.prolog.PrologList;
 import io.github.prolobjectlink.prolog.PrologMap;
 import io.github.prolobjectlink.prolog.PrologMethod;
-import io.github.prolobjectlink.prolog.PrologMixin;
 import io.github.prolobjectlink.prolog.PrologStructure;
 import io.github.prolobjectlink.prolog.PrologTerm;
 import io.github.prolobjectlink.prolog.PrologThread;
@@ -657,20 +655,6 @@ public class PrologProviderTest extends PrologBaseTest {
 	}
 
 	@Test
-	public void testNewMixinString() {
-		PrologMixin mixin = provider.newMixin("'com.acme.Mixin'").cast();
-		assertEquals("'com.acme.Mixin'", mixin.getName());
-	}
-
-	@Test
-	public void testNewMixinStringPrologTermArray() {
-		PrologTerm dark = provider.newStructure("dark", x);
-		PrologTerm fuzzy = provider.newStructure("fuzzy_metrics", x, y, z);
-		PrologMixin interfacce = provider.newMixin("'com.acme.Interface'", dark, fuzzy).cast();
-		assertEquals("'com.acme.Interface'", interfacce.getName());
-	}
-
-	@Test
 	public void testNewMethodPrologTerm() {
 		PrologTerm blackCat = provider.newStructure("black", cat);
 		PrologMethod m = provider.newMethod(blackCat).cast();
@@ -780,12 +764,6 @@ public class PrologProviderTest extends PrologBaseTest {
 		assertTrue(fuzzy_metrics_1.isFunction());
 		assertTrue(fuzzy_metrics_2.isFunction());
 		assertTrue(fuzzy_metrics_3.isFunction());
-	}
-
-	@Test
-	public void testNewClassString() {
-		PrologClass cls = provider.newClass("'com.acme.HelloWorld'").cast();
-		assertEquals("'com.acme.HelloWorld'", cls.getName());
 	}
 
 }
