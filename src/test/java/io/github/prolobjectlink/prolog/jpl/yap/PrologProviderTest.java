@@ -49,17 +49,13 @@ import org.junit.Test;
 import io.github.prolobjectlink.prolog.PrologAtom;
 import io.github.prolobjectlink.prolog.PrologEntry;
 import io.github.prolobjectlink.prolog.PrologFloat;
-import io.github.prolobjectlink.prolog.PrologFunction;
 import io.github.prolobjectlink.prolog.PrologInteger;
 import io.github.prolobjectlink.prolog.PrologList;
 import io.github.prolobjectlink.prolog.PrologMap;
-import io.github.prolobjectlink.prolog.PrologMethod;
 import io.github.prolobjectlink.prolog.PrologStructure;
 import io.github.prolobjectlink.prolog.PrologTerm;
 import io.github.prolobjectlink.prolog.PrologThread;
 import io.github.prolobjectlink.prolog.PrologThreadPool;
-import io.github.prolobjectlink.prolog.PrologType;
-import io.github.prolobjectlink.prolog.PrologTypedField;
 import io.github.prolobjectlink.prolog.PrologVariable;
 
 public class PrologProviderTest extends PrologBaseTest {
@@ -591,130 +587,6 @@ public class PrologProviderTest extends PrologBaseTest {
 		assertFalse(pool.isShutdown());
 		pool.shutdown();
 		assertTrue(pool.isShutdown());
-	}
-
-	@Test
-	public void testNewFieldPrologTermPrologTerm() {
-		PrologTypedField field = provider.newField("X", "ATOM").cast();
-		assertTrue(field.isField());
-	}
-
-	@Test
-	public void testNewFieldStringString() {
-		PrologTypedField field = provider.newField(x, PrologType.ATOM).cast();
-		assertTrue(field.isField());
-	}
-
-	@Test
-	public void testNewMethodPrologTerm() {
-		PrologTerm blackCat = provider.newStructure("black", cat);
-		PrologMethod m = provider.newMethod(blackCat).cast();
-		assertTrue(m.isMethod());
-	}
-
-	@Test
-	public void testNewMethodPrologTermPrologTerm() {
-		PrologTerm dark = provider.newStructure("dark", x);
-		PrologTerm black = provider.newStructure("black", x);
-		PrologMethod m = provider.newMethod(dark, black).cast();
-		assertTrue(m.isMethod());
-	}
-
-	@Test
-	public void testNewMethodPrologTermPrologTermArray() {
-		PrologTerm dark = provider.newStructure("dark", x);
-		PrologTerm black = provider.newStructure("black", x);
-		PrologTerm brown = provider.newStructure("brown", x);
-		PrologMethod m = provider.newMethod(dark, black, brown).cast();
-		assertTrue(m.isMethod());
-	}
-
-	@Test
-	public void testNewFunctionPrologTermPrologTerm() {
-		PrologTerm one = provider.newDouble(1.0);
-		PrologTerm zero = provider.newDouble(0.0);
-		PrologTerm v = provider.newVariable("V", 4);
-		PrologTerm fuzzy = provider.newStructure("fuzzy_metrics", x, y, z);
-		PrologFunction fuzzy_metrics_1 = provider.newFunction(fuzzy, one).cast();
-		PrologFunction fuzzy_metrics_2 = provider.newFunction(fuzzy, zero).cast();
-		PrologFunction fuzzy_metrics_3 = provider.newFunction(fuzzy, v).cast();
-		assertTrue(fuzzy_metrics_1.isFunction());
-		assertTrue(fuzzy_metrics_2.isFunction());
-		assertTrue(fuzzy_metrics_3.isFunction());
-	}
-
-	@Test
-	public void testNewFunctionPrologTermPrologTermPrologTerm() {
-		PrologTerm one = provider.newDouble(1.0);
-		PrologTerm zero = provider.newDouble(0.0);
-		PrologTerm v = provider.newVariable("V", 4);
-		PrologTerm fuzzy = provider.newStructure("fuzzy_metrics", x, y, z);
-		PrologTerm e1 = provider.newStructure(x, ">=", provider.newStructure(y, "+", z));
-		PrologTerm e2 = provider.newStructure(x, "<=", provider.newStructure(y, "-", z));
-		PrologTerm e3 = provider.newStructure(x, "<=", provider.newStructure(y, "-", z));
-		PrologFunction fuzzy_metrics_1 = provider.newFunction(fuzzy, one, e1).cast();
-		PrologFunction fuzzy_metrics_2 = provider.newFunction(fuzzy, zero, e2).cast();
-		PrologFunction fuzzy_metrics_3 = provider.newFunction(fuzzy, v, e3).cast();
-		assertTrue(fuzzy_metrics_1.isFunction());
-		assertTrue(fuzzy_metrics_2.isFunction());
-		assertTrue(fuzzy_metrics_3.isFunction());
-	}
-
-	@Test
-	public void testNewFunctionPrologTermPrologTermPrologTermArray() {
-		PrologTerm one = provider.newDouble(1.0);
-		PrologTerm zero = provider.newDouble(0.0);
-		PrologTerm v = provider.newVariable("V", 4);
-		PrologTerm fuzzy = provider.newStructure("fuzzy_metrics", x, y, z);
-		PrologTerm e1 = provider.newStructure(x, ">=", provider.newStructure(y, "+", z));
-		PrologTerm e2 = provider.newStructure(x, "<=", provider.newStructure(y, "-", z));
-		PrologTerm e3 = provider.newStructure(x, "<=", provider.newStructure(y, "-", z));
-		PrologFunction fuzzy_metrics_1 = provider.newFunction(fuzzy, one, e1, e2, e3).cast();
-		PrologFunction fuzzy_metrics_2 = provider.newFunction(fuzzy, zero, e1, e2, e3).cast();
-		PrologFunction fuzzy_metrics_3 = provider.newFunction(fuzzy, v, e1, e2, e3).cast();
-		assertTrue(fuzzy_metrics_1.isFunction());
-		assertTrue(fuzzy_metrics_2.isFunction());
-		assertTrue(fuzzy_metrics_3.isFunction());
-	}
-
-	@Test
-	public void testNewFunctionPrologTermObject() {
-		PrologTerm v = provider.newVariable("V", 4);
-		PrologTerm fuzzy = provider.newStructure("fuzzy_metrics", x, y, z);
-		PrologFunction fuzzy_metrics_1 = provider.newFunction(fuzzy, 1.0).cast();
-		PrologFunction fuzzy_metrics_2 = provider.newFunction(fuzzy, 0.0).cast();
-		PrologFunction fuzzy_metrics_3 = provider.newFunction(fuzzy, v).cast();
-		assertTrue(fuzzy_metrics_1.isFunction());
-		assertTrue(fuzzy_metrics_2.isFunction());
-		assertTrue(fuzzy_metrics_3.isFunction());
-	}
-
-	@Test
-	public void testNewFunctionPrologTermObjectPrologTerm() {
-		PrologTerm fuzzy = provider.newStructure("fuzzy_metrics", x, y, z);
-		PrologTerm e1 = provider.newStructure(x, ">=", provider.newStructure(y, "+", z));
-		PrologTerm e2 = provider.newStructure(x, "<=", provider.newStructure(y, "-", z));
-		PrologTerm e3 = provider.newStructure(x, "<=", provider.newStructure(y, "-", z));
-		PrologFunction fuzzy_metrics_1 = provider.newFunction(fuzzy, 1.0, e1).cast();
-		PrologFunction fuzzy_metrics_2 = provider.newFunction(fuzzy, 0.0, e2).cast();
-		PrologFunction fuzzy_metrics_3 = provider.newFunction(fuzzy, "V", e3).cast();
-		assertTrue(fuzzy_metrics_1.isFunction());
-		assertTrue(fuzzy_metrics_2.isFunction());
-		assertTrue(fuzzy_metrics_3.isFunction());
-	}
-
-	@Test
-	public void testNewFunctionPrologTermObjectPrologTermArray() {
-		PrologTerm fuzzy = provider.newStructure("fuzzy_metrics", x, y, z);
-		PrologTerm e1 = provider.newStructure(x, ">=", provider.newStructure(y, "+", z));
-		PrologTerm e2 = provider.newStructure(x, "<=", provider.newStructure(y, "-", z));
-		PrologTerm e3 = provider.newStructure(x, "<=", provider.newStructure(y, "-", z));
-		PrologFunction fuzzy_metrics_1 = provider.newFunction(fuzzy, 1.0, e1, e2, e3).cast();
-		PrologFunction fuzzy_metrics_2 = provider.newFunction(fuzzy, 0.0, e1, e2, e3).cast();
-		PrologFunction fuzzy_metrics_3 = provider.newFunction(fuzzy, "V", e1, e2, e3).cast();
-		assertTrue(fuzzy_metrics_1.isFunction());
-		assertTrue(fuzzy_metrics_2.isFunction());
-		assertTrue(fuzzy_metrics_3.isFunction());
 	}
 
 }
