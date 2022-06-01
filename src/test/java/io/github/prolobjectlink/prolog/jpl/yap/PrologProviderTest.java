@@ -34,8 +34,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -53,8 +51,6 @@ import io.github.prolobjectlink.prolog.PrologList;
 import io.github.prolobjectlink.prolog.PrologMap;
 import io.github.prolobjectlink.prolog.PrologStructure;
 import io.github.prolobjectlink.prolog.PrologTerm;
-import io.github.prolobjectlink.prolog.PrologThread;
-import io.github.prolobjectlink.prolog.PrologThreadPool;
 import io.github.prolobjectlink.prolog.PrologVariable;
 
 public class PrologProviderTest extends PrologBaseTest {
@@ -346,106 +342,6 @@ public class PrologProviderTest extends PrologBaseTest {
 		PrologTerm hello = provider.newAtom("hello");
 		PrologAtom atom = provider.cast(hello);
 		assertEquals("hello", atom.getFunctor());
-	}
-
-	@Test
-	public void testNewThreadPrologTermArray() throws Exception {
-
-		PrologTerm assertion = provider.prologTrue();
-		PrologTerm atomCheck = provider.parseTerm("atom(a)");
-
-		assertNotNull(provider.newThread(assertion, atomCheck));
-		assertTrue(provider.newThread(assertion, atomCheck).getId() >= 0);
-		assertTrue(provider.newThread(assertion, atomCheck).getName().contains("Thread"));
-
-		// empty query
-		assertEquals(new ArrayList<ArrayList<Object>>(), provider.newThread().call());
-		assertEquals(new ArrayList<ArrayList<Object>>(), provider.newThread().get());
-
-		// true query
-		assertEquals(Arrays.asList(Arrays.asList()), provider.newThread(assertion, atomCheck).call());
-		assertEquals(Arrays.asList(Arrays.asList()), provider.newThread(assertion, atomCheck).get());
-
-	}
-
-	@Test
-	public void testNewThreadStringPrologTermArray() throws Exception {
-
-		PrologTerm assertion = provider.prologTrue();
-		PrologTerm atomCheck = provider.parseTerm("atom(a)");
-
-		assertNotNull(provider.newThread("Bifurcation", assertion, atomCheck));
-		assertTrue(provider.newThread("Bifurcation", assertion, atomCheck).getId() >= 0);
-		assertTrue(provider.newThread("Bifurcation", assertion, atomCheck).getName().equals("Bifurcation"));
-
-		// empty query
-		assertEquals(new ArrayList<ArrayList<Object>>(), provider.newThread("Bifurcation").call());
-		assertEquals(new ArrayList<ArrayList<Object>>(), provider.newThread("Bifurcation").get());
-
-		// true query
-		assertEquals(Arrays.asList(Arrays.asList()), provider.newThread("Bifurcation", assertion, atomCheck).call());
-		assertEquals(Arrays.asList(Arrays.asList()), provider.newThread("Bifurcation", assertion, atomCheck).get());
-
-	}
-
-	@Test
-	public void testCurrentThread() throws Exception {
-
-		assertNotNull(provider.currentThread(provider.prologTrue()));
-		assertTrue(provider.currentThread(provider.prologTrue()).getId() >= 0);
-		assertTrue(provider.currentThread(provider.prologTrue()).getName().contains("Thread"));
-
-		// empty query
-		assertEquals(new ArrayList<ArrayList<Object>>(), provider.currentThread().call());
-		assertEquals(new ArrayList<ArrayList<Object>>(), provider.currentThread().get());
-
-		// true query
-		assertEquals(Arrays.asList(Arrays.asList()), provider.currentThread(provider.prologTrue()).call());
-		assertEquals(Arrays.asList(Arrays.asList()), provider.currentThread(provider.prologTrue()).get());
-
-		// variable query
-		PrologTerm expression = provider.newStructure(x, "is", provider.newStructure(2, "+", 2));
-		assertEquals(Arrays.asList(Arrays.asList(4)), provider.currentThread(expression).call());
-
-	}
-
-	@Test(expected = UnsupportedOperationException.class)
-	public void testJoinThreadsPrologThreadArray() {
-
-		PrologThread thread0 = provider.newThread(provider.prologTrue());
-		PrologThread thread1 = provider.newThread(provider.prologTrue());
-		PrologThread thread2 = provider.newThread(provider.prologTrue());
-		PrologThread thread3 = provider.newThread(provider.prologTrue());
-
-		provider.joinThreads(thread0, thread1, thread2, thread3);
-	}
-
-	@Test(expected = UnsupportedOperationException.class)
-	public void testJoinThreadsStringPrologThreadArray() {
-
-		PrologThread thread0 = provider.newThread(provider.prologTrue());
-		PrologThread thread1 = provider.newThread(provider.prologTrue());
-		PrologThread thread2 = provider.newThread(provider.prologTrue());
-		PrologThread thread3 = provider.newThread(provider.prologTrue());
-
-		provider.joinThreads(thread0, thread1, thread2, thread3);
-
-	}
-
-	@Test
-	public void testNewThreadPool() {
-		PrologThreadPool pool = provider.newThreadPool();
-		assertFalse(pool.isShutdown());
-		pool.shutdown();
-		assertTrue(pool.isShutdown());
-	}
-
-	@Test
-	public void testNewThreadPoolInt() {
-		PrologThreadPool pool = provider.newThreadPool(16);
-		assertFalse(pool.isShutdown());
-		pool.shutdown();
-		assertTrue(pool.isShutdown());
 	}
 
 }
