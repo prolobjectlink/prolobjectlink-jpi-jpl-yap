@@ -20,6 +20,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 This product link dynamically software licensed under GNU Library General Public License
+version 2.1 and Copyright (C) 2020  Prolobjectlink Project
+see http://www.fsf.org/copyleft/lgpl.html
+
+This product link dynamically software licensed under GNU Library General Public License
 version 2.1 and Copyright (C) 2004  Paul Singleton, Copyright (C) 1998  Fred Dushin
 see http://www.fsf.org/copyleft/lgpl.html
 
