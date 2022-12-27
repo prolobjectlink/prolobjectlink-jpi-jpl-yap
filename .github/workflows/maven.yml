@@ -77,6 +77,7 @@ jobs:
     - run: cd packages/jpl
     - run: ./configure
     - run: make
+    - run: echo pwd
     - run: export SWI_HOME=/home/travis/build/prolobjectlink/prolobjectlink-jpi-jpl-swi/pl-6.6.6
     - run: export PATH=$PATH:$SWI_HOME/bin
     - run: export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/travis/build/prolobjectlink/prolobjectlink-jpi-jpl-swi/pl-6.6.6/packages/jpl
