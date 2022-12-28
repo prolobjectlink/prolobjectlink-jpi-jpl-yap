@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../jacoco-resources/report.gif" type="image/gif"/><title>JplList.java</title><link rel="stylesheet" href="../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../index.html" class="el_report">prolobjectlink-jpi-jpl-yap</a> &gt; <a href="../index.html" class="el_bundle">prolobjectlink-jpi-jpl</a> &gt; <a href="index.source.html" class="el_package">io.github.prolobjectlink.prolog.jpl</a> &gt; <span class="el_source">JplList.java</span></div><h1>JplList.java</h1><pre class="source lang-java linenums">/*
+ * #%L
+ * prolobjectlink-jpi-jpl
+ * %%
+ * Copyright (C) 2019 Prolobjectlink Project
+ * %%
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 2.1 of the
+ * License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Lesser Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Lesser Public
+ * License along with this program.  If not, see
+ * &lt;http://www.gnu.org/licenses/lgpl-2.1.html&gt;.
+ * #L%
+ */
+package io.github.prolobjectlink.prolog.jpl;
+
+import static io.github.prolobjectlink.prolog.PrologTermType.LIST_TYPE;
+
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+import io.github.prolobjectlink.prolog.AbstractIterator;
+import io.github.prolobjectlink.prolog.PrologList;
+import io.github.prolobjectlink.prolog.PrologProvider;
+import io.github.prolobjectlink.prolog.PrologTerm;
+import jpl.Atom;
+import jpl.Compound;
+import jpl.Term;
+
+/**
+ * 
+ * @author Jose Zalacain
+ * @since 1.0
+ */
+public class JplList extends JplTerm implements PrologList {
+
+<span class="fc" id="L44">	public static final Term EMPTY = new Atom(&quot;[]&quot;);</span>
+
+	protected JplList(PrologProvider provider) {
+<span class="fc" id="L47">		super(LIST_TYPE, provider, EMPTY);</span>
+<span class="fc" id="L48">	}</span>
+
+	protected JplList(PrologProvider provider, Term[] arguments) {
+<span class="fc" id="L51">		super(LIST_TYPE, provider);</span>
+<span class="fc" id="L52">		value = EMPTY;</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">		for (int i = arguments.length - 1; i &gt;= 0; --i) {</span>
+<span class="fc" id="L54">			value = new Compound(&quot;.&quot;, new Term[] { arguments[i], value });</span>
+		}
+<span class="fc" id="L56">	}</span>
+
+	protected JplList(PrologProvider provider, PrologTerm[] arguments) {
+<span class="fc" id="L59">		super(LIST_TYPE, provider);</span>
+<span class="fc" id="L60">		value = EMPTY;</span>
+<span class="fc bfc" id="L61" title="All 2 branches covered.">		for (int i = arguments.length - 1; i &gt;= 0; --i) {</span>
+<span class="fc" id="L62">			value = new Compound(&quot;.&quot;, new Term[] { ((JplTerm) arguments[i]).value, value });</span>
+		}
+<span class="fc" id="L64">	}</span>
+
+	protected JplList(PrologProvider provider, PrologTerm head, PrologTerm tail) {
+<span class="nc" id="L67">		super(LIST_TYPE, provider);</span>
+<span class="nc" id="L68">		Term h = ((JplTerm) head).value;</span>
+<span class="nc" id="L69">		Term t = ((JplTerm) tail).value;</span>
+<span class="nc" id="L70">		value = new Compound(&quot;.&quot;, new Term[] { h, t });</span>
+<span class="nc" id="L71">	}</span>
+
+	protected JplList(PrologProvider provider, PrologTerm[] arguments, PrologTerm tail) {
+<span class="nc" id="L74">		super(LIST_TYPE, provider);</span>
+<span class="nc" id="L75">		value = fromTerm(tail, Term.class);</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">		for (int i = arguments.length - 1; i &gt;= 0; --i) {</span>
+<span class="nc" id="L77">			Term[] args = { fromTerm(arguments[i], Term.class), value };</span>
+<span class="nc" id="L78">			value = new Compound(&quot;.&quot;, args);</span>
+		}
+<span class="nc" id="L80">	}</span>
+
+	public int size() {
+<span class="fc" id="L83">		return ((Compound) value).listLength();</span>
+	}
+
+	public void clear() {
+<span class="fc" id="L87">		value = EMPTY;</span>
+<span class="fc" id="L88">	}</span>
+
+	public boolean isEmpty() {
+<span class="fc" id="L91">		return value.equals(EMPTY);</span>
+	}
+
+	public Iterator&lt;PrologTerm&gt; iterator() {
+<span class="fc" id="L95">		return new SwiPrologListIter(value);</span>
+	}
+
+	public PrologTerm getHead() {
+<span class="fc" id="L99">		Compound list = (Compound) value;</span>
+<span class="fc" id="L100">		return provider.toTerm(list.arg(1), PrologTerm.class);</span>
+	}
+
+	public PrologTerm getTail() {
+<span class="fc" id="L104">		Compound list = (Compound) value;</span>
+<span class="fc" id="L105">		return provider.toTerm(list.arg(2), PrologTerm.class);</span>
+	}
+
+	public int getArity() {
+<span class="fc" id="L109">		return value.arity();</span>
+	}
+
+	public String getFunctor() {
+<span class="fc" id="L113">		return &quot;.&quot;;</span>
+	}
+
+	public PrologTerm[] getArguments() {
+<span class="fc" id="L117">		return toTermArray(value.toTermArray(), PrologTerm[].class);</span>
+	}
+
+	public String toString() {
+<span class="fc" id="L121">		StringBuilder string = new StringBuilder(&quot;[&quot;);</span>
+<span class="fc" id="L122">		Iterator&lt;PrologTerm&gt; i = iterator();</span>
+<span class="pc bpc" id="L123" title="1 of 2 branches missed.">		if (i.hasNext()) {</span>
+<span class="nc" id="L124">			string.append(i.next());</span>
+		}
+<span class="pc bpc" id="L126" title="1 of 2 branches missed.">		while (i.hasNext()) {</span>
+<span class="nc" id="L127">			string.append(&quot;, &quot;);</span>
+<span class="nc" id="L128">			string.append(i.next());</span>
+		}
+<span class="fc" id="L130">		return string.append(&quot;]&quot;).toString();</span>
+	}
+
+	private class SwiPrologListIter extends AbstractIterator&lt;PrologTerm&gt; implements Iterator&lt;PrologTerm&gt; {
+
+		private Term ptr;
+		private int index;
+		private int length;
+
+<span class="fc" id="L139">		private SwiPrologListIter(Term l) {</span>
+<span class="fc" id="L140">			ptr = l;</span>
+<span class="fc bfc" id="L141" title="All 2 branches covered.">			if (l.hasFunctor(&quot;.&quot;, 2)) {</span>
+<span class="fc" id="L142">				length = l.listLength();</span>
+			}
+<span class="fc" id="L144">		}</span>
+
+		public boolean hasNext() {
+<span class="fc bfc" id="L147" title="All 2 branches covered.">			return index &lt; length;</span>
+		}
+
+		public PrologTerm next() {
+
+<span class="pc bpc" id="L152" title="1 of 2 branches missed.">			if (!hasNext()) {</span>
+<span class="nc" id="L153">				throw new NoSuchElementException();</span>
+			}
+
+<span class="fc" id="L156">			PrologTerm term = toTerm(ptr.arg(1), PrologTerm.class);</span>
+<span class="fc" id="L157">			ptr = ptr.arg(2);</span>
+<span class="fc" id="L158">			index++;</span>
+<span class="fc" id="L159">			return term;</span>
+		}
+
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

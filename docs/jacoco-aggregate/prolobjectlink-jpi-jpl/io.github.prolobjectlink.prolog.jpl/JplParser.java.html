@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../jacoco-resources/report.gif" type="image/gif"/><title>JplParser.java</title><link rel="stylesheet" href="../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../index.html" class="el_report">prolobjectlink-jpi-jpl-yap</a> &gt; <a href="../index.html" class="el_bundle">prolobjectlink-jpi-jpl</a> &gt; <a href="index.source.html" class="el_package">io.github.prolobjectlink.prolog.jpl</a> &gt; <span class="el_source">JplParser.java</span></div><h1>JplParser.java</h1><pre class="source lang-java linenums">/*
+ * #%L
+ * prolobjectlink-jpi-jpl
+ * %%
+ * Copyright (C) 2019 Prolobjectlink Project
+ * %%
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 2.1 of the
+ * License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Lesser Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Lesser Public
+ * License along with this program.  If not, see
+ * &lt;http://www.gnu.org/licenses/lgpl-2.1.html&gt;.
+ * #L%
+ */
+package io.github.prolobjectlink.prolog.jpl;
+
+import static io.github.prolobjectlink.prolog.PrologLogger.FILE_NOT_FOUND;
+import static io.github.prolobjectlink.prolog.PrologLogger.IO;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
+import java.util.ArrayList;
+import java.util.List;
+
+import jpl.Atom;
+import jpl.Compound;
+import jpl.Term;
+import jpl.Util;
+
+/**
+ * 
+ * @author Jose Zalacain
+ * @since 1.0
+ */
+<span class="fc" id="L46">final class JplParser {</span>
+
+	public Term parseTerm(String term) {
+<span class="nc" id="L49">		return Util.textToTerm(term);</span>
+	}
+
+	public Term[] parseTerms(Term term) {
+<span class="fc" id="L53">		return parseTerms(&quot;&quot; + term + &quot;&quot;);</span>
+	}
+
+	public Term[] parseTerms(String stringTerms) {
+<span class="fc" id="L57">		Term[] a = new Term[0];</span>
+<span class="fc" id="L58">		Term ptr = Util.textToTerm(stringTerms);</span>
+<span class="fc" id="L59">		List&lt;Term&gt; terms = new ArrayList&lt;Term&gt;();</span>
+<span class="pc bpc" id="L60" title="1 of 4 branches missed.">		while (ptr.isCompound() &amp;&amp; ptr.hasFunctor(&quot;,&quot;, 2)) {</span>
+<span class="fc" id="L61">			terms.add(ptr.arg(1));</span>
+<span class="fc" id="L62">			ptr = ptr.arg(2);</span>
+		}
+<span class="fc" id="L64">		terms.add(ptr);</span>
+<span class="fc" id="L65">		return terms.toArray(a);</span>
+	}
+
+	public JplProgram parseProgram(String file) {
+<span class="fc" id="L69">		return parseProgram(new File(file));</span>
+	}
+
+	public JplProgram parseProgram(File in) {
+
+<span class="fc" id="L74">		FileReader reader = null;</span>
+<span class="fc" id="L75">		BufferedReader buffer = null;</span>
+<span class="fc" id="L76">		JplProgram program = new JplProgram();</span>
+
+		try {
+<span class="fc" id="L79">			reader = new FileReader(in);</span>
+<span class="fc" id="L80">			buffer = new BufferedReader(reader);</span>
+<span class="fc" id="L81">			String line = buffer.readLine();</span>
+<span class="fc" id="L82">			StringBuilder b = new StringBuilder();</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">			while (line != null) {</span>
+<span class="fc bfc" id="L84" title="All 4 branches covered.">				if (!line.isEmpty() &amp;&amp; line.lastIndexOf('.') == line.length() - 1) {</span>
+<span class="fc" id="L85">					b.append(line.substring(0, line.length() - 1));</span>
+<span class="fc" id="L86">					Term clauseTerm = Util.textToTerm(&quot;&quot; + b + &quot;&quot;);</span>
+<span class="pc bpc" id="L87" title="1 of 2 branches missed.">					if (clauseTerm.hasFunctor(&quot;:-&quot;, 1)) {</span>
+<span class="nc" id="L88">						String absoluteString = &quot;&quot;;</span>
+<span class="nc" id="L89">						Term arg = clauseTerm.arg(1);</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">						if (arg.hasFunctor(&quot;consult&quot;, 1)) {</span>
+<span class="nc" id="L91">							Term relative = arg.arg(1);</span>
+<span class="nc" id="L92">							String path = relative.name();</span>
+<span class="nc" id="L93">							String[] array = path.split(&quot;\\.\\./&quot;);</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">							if (array.length &gt; 1) {</span>
+<span class="nc" id="L95">								String ok = array[array.length - 1];</span>
+<span class="nc" id="L96">								File currentPtr = in.getCanonicalFile();</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">								for (int i = 0; i &lt; array.length; i++) {</span>
+<span class="nc" id="L98">									currentPtr = currentPtr.getParentFile();</span>
+								}
+<span class="nc" id="L100">								String ptr = currentPtr.getCanonicalPath();</span>
+<span class="nc" id="L101">								File abs = new File(ptr + File.separator + ok);</span>
+<span class="nc" id="L102">								absoluteString = abs.getCanonicalPath();</span>
+							}
+<span class="nc" id="L104">							Atom absolute = new Atom(absoluteString.toLowerCase().replace(File.separatorChar, '/'));</span>
+<span class="nc" id="L105">							Compound c = new Compound(&quot;consult&quot;, new Term[] { absolute });</span>
+<span class="nc" id="L106">							program.addDirective(c);</span>
+<span class="nc" id="L107">						} else {</span>
+<span class="nc" id="L108">							program.addDirective(clauseTerm);</span>
+						}
+
+<span class="nc" id="L111">					} else {</span>
+<span class="fc" id="L112">						program.add(clauseTerm);</span>
+					}
+<span class="fc" id="L114">					b = new StringBuilder();</span>
+<span class="fc" id="L115">				} else {</span>
+<span class="fc" id="L116">					b.append(line);</span>
+				}
+<span class="fc" id="L118">				line = buffer.readLine();</span>
+			}
+<span class="nc" id="L120">		} catch (FileNotFoundException e) {</span>
+<span class="nc" id="L121">			JplProvider.logger.error(getClass(), FILE_NOT_FOUND, e);</span>
+<span class="nc" id="L122">		} catch (IOException e) {</span>
+<span class="nc" id="L123">			JplProvider.logger.error(getClass(), IO, e);</span>
+		} finally {
+<span class="pc bpc" id="L125" title="1 of 2 branches missed.">			if (reader != null) {</span>
+				try {
+<span class="fc" id="L127">					reader.close();</span>
+<span class="nc" id="L128">				} catch (IOException e) {</span>
+<span class="nc" id="L129">					JplProvider.logger.error(getClass(), IO, e);</span>
+<span class="fc" id="L130">				}</span>
+			}
+<span class="pc bpc" id="L132" title="1 of 2 branches missed.">			if (buffer != null) {</span>
+				try {
+<span class="fc" id="L134">					buffer.close();</span>
+<span class="nc" id="L135">				} catch (IOException e) {</span>
+<span class="nc" id="L136">					JplProvider.logger.error(getClass(), IO, e);</span>
+<span class="fc" id="L137">				}</span>
+			}
+		}
+
+<span class="fc" id="L141">		return program;</span>
+	}
+
+	public JplProgram parseProgram(Reader in) {
+
+<span class="fc" id="L146">		BufferedReader buffer = null;</span>
+<span class="fc" id="L147">		JplProgram program = new JplProgram();</span>
+
+		try {
+<span class="fc" id="L150">			buffer = new BufferedReader(in);</span>
+<span class="fc" id="L151">			String line = buffer.readLine();</span>
+<span class="fc" id="L152">			StringBuilder b = new StringBuilder();</span>
+<span class="fc bfc" id="L153" title="All 2 branches covered.">			while (line != null) {</span>
+<span class="fc bfc" id="L154" title="All 4 branches covered.">				if (!line.isEmpty() &amp;&amp; line.lastIndexOf('.') == line.length() - 1) {</span>
+<span class="fc" id="L155">					b.append(line.substring(0, line.length() - 1));</span>
+<span class="fc" id="L156">					Term clauseTerm = Util.textToTerm(&quot;&quot; + b + &quot;&quot;);</span>
+<span class="fc" id="L157">					program.add(clauseTerm);</span>
+<span class="fc" id="L158">					b = new StringBuilder();</span>
+<span class="fc" id="L159">				} else {</span>
+<span class="fc" id="L160">					b.append(line);</span>
+				}
+<span class="fc" id="L162">				line = buffer.readLine();</span>
+			}
+<span class="nc" id="L164">		} catch (IOException e) {</span>
+<span class="nc" id="L165">			JplProvider.logger.error(getClass(), IO, e);</span>
+		} finally {
+<span class="pc bpc" id="L167" title="1 of 2 branches missed.">			if (buffer != null) {</span>
+				try {
+<span class="fc" id="L169">					buffer.close();</span>
+<span class="nc" id="L170">				} catch (IOException e) {</span>
+<span class="nc" id="L171">					JplProvider.logger.error(getClass(), IO, e);</span>
+<span class="fc" id="L172">				}</span>
+			}
+		}
+
+<span class="fc" id="L176">		return program;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

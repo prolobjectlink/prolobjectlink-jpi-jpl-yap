@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../jacoco-resources/report.gif" type="image/gif"/><title>JplLogger.java</title><link rel="stylesheet" href="../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../index.html" class="el_report">prolobjectlink-jpi-jpl-yap</a> &gt; <a href="../index.html" class="el_bundle">prolobjectlink-jpi-jpl</a> &gt; <a href="index.source.html" class="el_package">io.github.prolobjectlink.prolog.jpl</a> &gt; <span class="el_source">JplLogger.java</span></div><h1>JplLogger.java</h1><pre class="source lang-java linenums">/*-
+ * #%L
+ * prolobjectlink-jpi-jpl
+ * %%
+ * Copyright (C) 2012 - 2019 Prolobjectlink Project
+ * %%
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 2.1 of the
+ * License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Lesser Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Lesser Public
+ * License along with this program.  If not, see
+ * &lt;http://www.gnu.org/licenses/lgpl-2.1.html&gt;.
+ * #L%
+ */
+package io.github.prolobjectlink.prolog.jpl;
+
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.FileHandler;
+import java.util.logging.Formatter;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import io.github.prolobjectlink.prolog.AbstractLogger;
+import io.github.prolobjectlink.prolog.PrologLogger;
+
+/**
+ * 
+ * @author Jose Zalacain
+ * @since 1.0
+ */
+<span class="pc bpc" id="L41" title="1 of 2 branches missed.">final class JplLogger extends AbstractLogger implements PrologLogger {</span>
+
+	private static final String MESSAGE = &quot;Logger File Handler can't be created&quot;;
+<span class="fc" id="L44">	private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);</span>
+
+	public JplLogger() {
+<span class="fc" id="L47">		this(Level.INFO);</span>
+<span class="fc" id="L48">	}</span>
+
+<span class="fc" id="L50">	private JplLogger(Level level) {</span>
+<span class="fc" id="L51">		LOGGER.setLevel(level);</span>
+<span class="fc" id="L52">		Logger rootlogger = LOGGER.getParent();</span>
+<span class="fc" id="L53">		SimpleDateFormat f = new SimpleDateFormat(&quot;yyyy.MM.dd&quot;);</span>
+<span class="fc" id="L54">		String date = f.format(new Date());</span>
+<span class="fc" id="L55">		Formatter formatter = new JplFormatter();</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">		for (Handler h : rootlogger.getHandlers()) {</span>
+<span class="fc" id="L57">			h.setFormatter(formatter);</span>
+<span class="fc" id="L58">			h.setLevel(level);</span>
+		}
+<span class="fc" id="L60">		FileHandler file = null;</span>
+		try {
+<span class="fc" id="L62">			file = new FileHandler(&quot;%t/prolobjectlink-&quot; + date + &quot;.log&quot;, true);</span>
+<span class="nc" id="L63">		} catch (SecurityException e) {</span>
+<span class="nc" id="L64">			rootlogger.log(Level.SEVERE, MESSAGE, e);</span>
+<span class="nc" id="L65">		} catch (IOException e) {</span>
+<span class="nc" id="L66">			rootlogger.log(Level.SEVERE, MESSAGE, e);</span>
+<span class="pc" id="L67">		}</span>
+<span class="pc bpc" id="L68" title="2 of 4 branches missed.">		assert file != null;</span>
+<span class="fc" id="L69">		file.setFormatter(formatter);</span>
+<span class="fc" id="L70">		LOGGER.addHandler(file);</span>
+<span class="fc" id="L71">	}</span>
+
+	public void log(Object sender, Level level, Object message, Throwable throwable) {
+<span class="nc" id="L74">		LOGGER.log(level, sender + &quot;\n&quot; + message, throwable);</span>
+<span class="nc" id="L75">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

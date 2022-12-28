@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../jacoco-resources/report.gif" type="image/gif"/><title>JplEngine.java</title><link rel="stylesheet" href="../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../index.html" class="el_report">prolobjectlink-jpi-jpl-yap</a> &gt; <a href="../index.html" class="el_bundle">prolobjectlink-jpi-jpl</a> &gt; <a href="index.source.html" class="el_package">io.github.prolobjectlink.prolog.jpl</a> &gt; <span class="el_source">JplEngine.java</span></div><h1>JplEngine.java</h1><pre class="source lang-java linenums">/*
+ * #%L
+ * prolobjectlink-jpi-jpl
+ * %%
+ * Copyright (C) 2019 Prolobjectlink Project
+ * %%
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 2.1 of the
+ * License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Lesser Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Lesser Public
+ * License along with this program.  If not, see
+ * &lt;http://www.gnu.org/licenses/lgpl-2.1.html&gt;.
+ * #L%
+ */
+package io.github.prolobjectlink.prolog.jpl;
+
+import static io.github.prolobjectlink.prolog.PrologLogger.IO;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.Reader;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import io.github.prolobjectlink.prolog.AbstractEngine;
+import io.github.prolobjectlink.prolog.ArrayIterator;
+import io.github.prolobjectlink.prolog.PrologClause;
+import io.github.prolobjectlink.prolog.PrologEngine;
+import io.github.prolobjectlink.prolog.PrologIndicator;
+import io.github.prolobjectlink.prolog.PrologOperator;
+import io.github.prolobjectlink.prolog.PrologProgram;
+import io.github.prolobjectlink.prolog.PrologProvider;
+import io.github.prolobjectlink.prolog.PrologQuery;
+import io.github.prolobjectlink.prolog.PrologTerm;
+import io.github.prolobjectlink.prolog.PrologTermType;
+import jpl.Atom;
+import jpl.Query;
+import jpl.Term;
+import jpl.Util;
+
+/**
+ * 
+ * @author Jose Zalacain
+ * @since 1.0
+ */
+public abstract class JplEngine extends AbstractEngine implements PrologEngine {
+
+	// used only for findall list result
+	private static final String KEY = &quot;X&quot;;
+
+	// JPL use for fact clauses true prolog term
+<span class="fc" id="L66">	private static final Term BODY = new Atom(&quot;true&quot;);</span>
+
+	// cache file in OS temporal directory
+<span class="fc" id="L69">	private static String cache = null;</span>
+
+	// parser to obtain terms from text
+<span class="pc" id="L72">	private final JplParser parser = new JplParser();</span>
+
+	// main memory prolog program
+<span class="pc" id="L75">	private JplProgram program = new JplProgram();</span>
+
+	// formulated string for &lt; consult(cache), &gt;
+	private static String consultCacheComma;
+	static {
+		try {
+<span class="fc" id="L81">			File f = File.createTempFile(&quot;prolobjectlink-jpi-jpl-cache-&quot;, &quot;.pl&quot;);</span>
+<span class="fc" id="L82">			cache = f.getCanonicalPath().replace(File.separatorChar, '/');</span>
+<span class="fc" id="L83">			consultCacheComma = &quot;consult('&quot; + cache + &quot;'),&quot;;</span>
+<span class="nc" id="L84">		} catch (IOException e) {</span>
+<span class="nc" id="L85">			JplProvider.logger.error(JplEngine.class, IO, e);</span>
+<span class="fc" id="L86">		}</span>
+<span class="fc" id="L87">	}</span>
+
+	protected JplEngine(PrologProvider provider) {
+<span class="fc" id="L90">		super(provider);</span>
+<span class="fc" id="L91">	}</span>
+
+	protected JplEngine(PrologProvider provider, String path) {
+<span class="nc" id="L94">		super(provider);</span>
+<span class="nc" id="L95">		consult(path);</span>
+<span class="nc" id="L96">	}</span>
+
+	public final void consult(String path) {
+<span class="fc" id="L99">		program = parser.parseProgram(path);</span>
+<span class="fc" id="L100">		persist(cache);</span>
+<span class="fc" id="L101">	}</span>
+
+	public final void consult(Reader reader) {
+<span class="nc" id="L104">		program = parser.parseProgram(reader);</span>
+<span class="nc" id="L105">		persist(cache);</span>
+<span class="nc" id="L106">	}</span>
+
+	public final void include(String path) {
+<span class="fc" id="L109">		program.add(parser.parseProgram(path));</span>
+<span class="fc" id="L110">		persist(cache);</span>
+<span class="fc" id="L111">	}</span>
+
+	public final void include(Reader reader) {
+<span class="fc" id="L114">		program.add(parser.parseProgram(reader));</span>
+<span class="fc" id="L115">		persist(cache);</span>
+<span class="fc" id="L116">	}</span>
+
+	public final void persist(String path) {
+<span class="fc" id="L119">		PrintWriter writer = null;</span>
+		try {
+<span class="fc" id="L121">			writer = new PrintWriter(new FileOutputStream(path, false));</span>
+<span class="fc" id="L122">			writer.print(program);</span>
+<span class="nc" id="L123">		} catch (FileNotFoundException e) {</span>
+<span class="nc" id="L124">			getLogger().error(getClass(), IO + cache, e);</span>
+		} finally {
+<span class="pc bpc" id="L126" title="1 of 2 branches missed.">			if (writer != null) {</span>
+<span class="fc" id="L127">				writer.close();</span>
+			}
+		}
+<span class="fc" id="L130">	}</span>
+
+	public final void abolish(String functor, int arity) {
+<span class="fc" id="L133">		program.removeAll(functor, arity);</span>
+<span class="fc" id="L134">		persist(cache);</span>
+<span class="fc" id="L135">	}</span>
+
+	public final void asserta(String stringClause) {
+<span class="fc" id="L138">		asserta(Util.textToTerm(stringClause));</span>
+<span class="fc" id="L139">	}</span>
+
+	public final void asserta(PrologTerm term) {
+<span class="fc" id="L142">		asserta(fromTerm(term, Term.class));</span>
+<span class="fc" id="L143">	}</span>
+
+	public final void asserta(PrologTerm head, PrologTerm... body) {
+<span class="fc" id="L146">		asserta(fromTerm(head, body, Term.class));</span>
+<span class="fc" id="L147">	}</span>
+
+	private void asserta(Term t) {
+<span class="fc" id="L150">		program.push(t);</span>
+<span class="fc" id="L151">		persist(cache);</span>
+<span class="fc" id="L152">	}</span>
+
+	public final void assertz(String stringClause) {
+<span class="fc" id="L155">		assertz(Util.textToTerm(stringClause));</span>
+<span class="fc" id="L156">	}</span>
+
+	public final void assertz(PrologTerm term) {
+<span class="fc" id="L159">		assertz(fromTerm(term, Term.class));</span>
+<span class="fc" id="L160">	}</span>
+
+	public final void assertz(PrologTerm head, PrologTerm... body) {
+<span class="fc" id="L163">		assertz(fromTerm(head, body, Term.class));</span>
+<span class="fc" id="L164">	}</span>
+
+	private void assertz(Term t) {
+<span class="fc" id="L167">		program.add(t);</span>
+<span class="fc" id="L168">		persist(cache);</span>
+<span class="fc" id="L169">	}</span>
+
+	public final boolean clause(String stringClause) {
+<span class="fc" id="L172">		return clause(Util.textToTerm(stringClause));</span>
+	}
+
+	public final boolean clause(PrologTerm term) {
+<span class="fc" id="L176">		return clause(fromTerm(term, Term.class));</span>
+	}
+
+	public final boolean clause(PrologTerm head, PrologTerm... body) {
+<span class="fc" id="L180">		return clause(fromTerm(head, body, Term.class));</span>
+	}
+
+	private boolean clause(Term t) {
+<span class="fc" id="L184">		Term h = t;</span>
+<span class="fc" id="L185">		Term b = BODY;</span>
+<span class="fc bfc" id="L186" title="All 2 branches covered.">		if (t.hasFunctor(&quot;:-&quot;, 2)) {</span>
+<span class="fc" id="L187">			h = t.arg(1);</span>
+<span class="fc" id="L188">			b = t.arg(2);</span>
+		}
+<span class="fc" id="L190">		return new JplQuery(</span>
+
+				this, cache, &quot;clause(&quot; + h + &quot;,&quot; + b + &quot;)&quot;
+
+<span class="fc" id="L194">		).hasSolution();</span>
+	}
+
+	public final void retract(String stringClause) {
+<span class="fc" id="L198">		retract(Util.textToTerm(stringClause));</span>
+<span class="fc" id="L199">	}</span>
+
+	public final void retract(PrologTerm term) {
+<span class="fc" id="L202">		retract(fromTerm(term, Term.class));</span>
+<span class="fc" id="L203">	}</span>
+
+	public final void retract(PrologTerm head, PrologTerm... body) {
+<span class="fc" id="L206">		retract(provider.fromTerm(head, body, Term.class));</span>
+<span class="fc" id="L207">	}</span>
+
+	private void retract(Term t) {
+<span class="fc" id="L210">		program.remove(t);</span>
+<span class="fc" id="L211">		persist(cache);</span>
+<span class="fc" id="L212">	}</span>
+
+	public final PrologQuery query(String stringQuery) {
+<span class="fc" id="L215">		return new JplQuery(this, cache, stringQuery);</span>
+	}
+
+	public final PrologQuery query(PrologTerm term) {
+<span class="fc" id="L219">		StringBuilder buffer = new StringBuilder();</span>
+<span class="fc" id="L220">		buffer.append(&quot;&quot; + term + &quot;.&quot;);</span>
+<span class="fc" id="L221">		return query(&quot;&quot; + buffer + &quot;&quot;);</span>
+	}
+
+	public final PrologQuery query(PrologTerm[] terms) {
+<span class="nc" id="L225">		Iterator&lt;PrologTerm&gt; i = new ArrayIterator&lt;PrologTerm&gt;(terms);</span>
+<span class="nc" id="L226">		StringBuilder buffer = new StringBuilder();</span>
+<span class="nc bnc" id="L227" title="All 2 branches missed.">		while (i.hasNext()) {</span>
+<span class="nc" id="L228">			buffer.append(i.next());</span>
+<span class="nc bnc" id="L229" title="All 2 branches missed.">			if (i.hasNext()) {</span>
+<span class="nc" id="L230">				buffer.append(',');</span>
+			}
+		}
+<span class="nc" id="L233">		buffer.append(&quot;.&quot;);</span>
+<span class="nc" id="L234">		return query(&quot;&quot; + buffer + &quot;&quot;);</span>
+	}
+
+	public final PrologQuery query(PrologTerm term, PrologTerm... terms) {
+<span class="fc" id="L238">		Iterator&lt;PrologTerm&gt; i = new ArrayIterator&lt;PrologTerm&gt;(terms);</span>
+<span class="fc" id="L239">		StringBuilder buffer = new StringBuilder();</span>
+<span class="fc" id="L240">		buffer.append(&quot;&quot; + term + &quot;&quot;);</span>
+<span class="fc bfc" id="L241" title="All 2 branches covered.">		while (i.hasNext()) {</span>
+<span class="fc" id="L242">			buffer.append(',');</span>
+<span class="fc" id="L243">			buffer.append(i.next());</span>
+		}
+<span class="fc" id="L245">		buffer.append(&quot;.&quot;);</span>
+<span class="fc" id="L246">		return query(&quot;&quot; + buffer + &quot;&quot;);</span>
+	}
+
+	public final void operator(int priority, String specifier, String operator) {
+<span class="fc" id="L250">		new Query(consultCacheComma + &quot;op(&quot; + priority + &quot;,&quot; + specifier + &quot;, &quot; + operator + &quot;)&quot;).hasSolution();</span>
+<span class="fc" id="L251">	}</span>
+
+	public final boolean currentPredicate(String functor, int arity) {
+<span class="fc" id="L254">		String x = functor;</span>
+<span class="pc bpc" id="L255" title="3 of 4 branches missed.">		if (x.startsWith(&quot;'&quot;) &amp;&amp; x.endsWith(&quot;'&quot;)) {</span>
+<span class="nc" id="L256">			x = x.substring(1, x.length() - 1);</span>
+		}
+<span class="fc" id="L258">		return getPredicates().contains(new JplIndicator(x, arity));</span>
+	}
+
+	public final boolean currentOperator(int priority, String specifier, String operator) {
+<span class="fc" id="L262">		return new Query(consultCacheComma + &quot;current_op(&quot; + priority + &quot;,&quot; + specifier + &quot;, &quot; + operator + &quot;)&quot;)</span>
+<span class="fc" id="L263">				.hasSolution();</span>
+	}
+
+	public final Set&lt;PrologOperator&gt; currentOperators() {
+<span class="fc" id="L267">		Set&lt;PrologOperator&gt; operators = new HashSet&lt;PrologOperator&gt;();</span>
+<span class="fc" id="L268">		String opQuery = consultCacheComma + &quot;findall(P/S/O,current_op(P,S,O),&quot; + KEY + &quot;)&quot;;</span>
+<span class="fc" id="L269">		Query query = new Query(opQuery);</span>
+<span class="pc bpc" id="L270" title="1 of 2 branches missed.">		if (query.hasSolution()) {</span>
+<span class="fc" id="L271">			Term term = (Term) query.oneSolution().get(KEY);</span>
+<span class="fc" id="L272">			Term[] termArray = term.toTermArray();</span>
+<span class="fc bfc" id="L273" title="All 2 branches covered.">			for (Term t : termArray) {</span>
+<span class="fc" id="L274">				Term prio = t.arg(1).arg(1);</span>
+<span class="fc" id="L275">				Term pos = t.arg(1).arg(2);</span>
+<span class="fc" id="L276">				Term op = t.arg(2);</span>
+
+<span class="fc" id="L278">				int p = prio.intValue();</span>
+<span class="fc" id="L279">				String s = pos.name();</span>
+<span class="fc" id="L280">				String n = op.name();</span>
+
+<span class="fc" id="L282">				PrologOperator o = new JplOperator(p, s, n);</span>
+<span class="fc" id="L283">				operators.add(o);</span>
+			}
+		}
+<span class="fc" id="L286">		query.close();</span>
+<span class="fc" id="L287">		return operators;</span>
+	}
+
+	public final int getProgramSize() {
+<span class="fc" id="L291">		return program.size();</span>
+	}
+
+	public final PrologProgram getProgram() {
+<span class="nc" id="L295">		return new JplScript(this);</span>
+	}
+
+	public final Set&lt;PrologIndicator&gt; getPredicates() {
+<span class="fc" id="L299">		Set&lt;PrologIndicator&gt; indicators = new HashSet&lt;PrologIndicator&gt;();</span>
+<span class="fc" id="L300">		String opQuery = consultCacheComma + &quot;findall(X/Y,current_predicate(X/Y),&quot; + KEY + &quot;)&quot;;</span>
+<span class="fc" id="L301">		Query query = new Query(opQuery);</span>
+<span class="pc bpc" id="L302" title="1 of 2 branches missed.">		if (query.hasSolution()) {</span>
+<span class="fc" id="L303">			Term term = (Term) query.oneSolution().get(KEY);</span>
+<span class="fc" id="L304">			Term[] termArray = term.toTermArray();</span>
+<span class="fc bfc" id="L305" title="All 2 branches covered.">			for (Term t : termArray) {</span>
+<span class="fc" id="L306">				Term f = t.arg(1);</span>
+<span class="fc" id="L307">				Term a = t.arg(2);</span>
+
+<span class="fc" id="L309">				int arity = a.intValue();</span>
+<span class="fc" id="L310">				String functor = f.name();</span>
+
+<span class="fc" id="L312">				JplIndicator pi = new JplIndicator(functor, arity);</span>
+<span class="fc" id="L313">				indicators.add(pi);</span>
+			}
+		}
+<span class="fc" id="L316">		return indicators;</span>
+	}
+
+	public final Set&lt;PrologIndicator&gt; getBuiltIns() {
+<span class="fc" id="L320">		Set&lt;PrologIndicator&gt; pis = predicates();</span>
+<span class="fc" id="L321">		Set&lt;PrologClause&gt; clauses = getProgramClauses();</span>
+<span class="pc bpc" id="L322" title="1 of 2 branches missed.">		for (PrologClause prologClause : clauses) {</span>
+<span class="nc" id="L323">			PrologIndicator pi = prologClause.getPrologIndicator();</span>
+<span class="nc bnc" id="L324" title="All 2 branches missed.">			if (pis.contains(pi)) {</span>
+<span class="nc" id="L325">				pis.remove(pi);</span>
+			}
+<span class="nc" id="L327">		}</span>
+<span class="fc" id="L328">		return pis;</span>
+	}
+
+	private Set&lt;PrologIndicator&gt; predicates() {
+<span class="fc" id="L332">		Set&lt;PrologIndicator&gt; indicators = new HashSet&lt;PrologIndicator&gt;();</span>
+<span class="fc" id="L333">		String stringQuery = &quot;consult('&quot; + cache + &quot;'),&quot; + &quot;findall(X/Y,current_predicate(X/Y),&quot; + KEY + &quot;)&quot;;</span>
+<span class="fc" id="L334">		PrologQuery query = new JplQuery(this, cache, stringQuery);</span>
+<span class="pc bpc" id="L335" title="1 of 2 branches missed.">		if (query.hasSolution()) {</span>
+<span class="fc" id="L336">			Map&lt;String, PrologTerm&gt;[] s = query.allVariablesSolutions();</span>
+<span class="fc bfc" id="L337" title="All 2 branches covered.">			for (Map&lt;String, PrologTerm&gt; map : s) {</span>
+<span class="fc bfc" id="L338" title="All 2 branches covered.">				for (PrologTerm term : map.values()) {</span>
+<span class="fc bfc" id="L339" title="All 2 branches covered.">					if (term.isCompound()) {</span>
+<span class="fc" id="L340">						int arity = term.getArity();</span>
+<span class="fc" id="L341">						String functor = term.getFunctor();</span>
+<span class="fc" id="L342">						JplIndicator pi = new JplIndicator(functor, arity);</span>
+<span class="fc" id="L343">						indicators.add(pi);</span>
+					}
+<span class="fc" id="L345">				}</span>
+			}
+		}
+<span class="fc" id="L348">		return indicators;</span>
+	}
+
+	public final Iterator&lt;PrologClause&gt; iterator() {
+<span class="fc" id="L352">		List&lt;PrologClause&gt; cls = new ArrayList&lt;PrologClause&gt;();</span>
+<span class="fc bfc" id="L353" title="All 2 branches covered.">		for (List&lt;Term&gt; family : program.getClauses().values()) {</span>
+<span class="fc bfc" id="L354" title="All 2 branches covered.">			for (Term clause : family) {</span>
+<span class="fc bfc" id="L355" title="All 2 branches covered.">				if (clause.hasFunctor(&quot;:-&quot;, 2)) {</span>
+<span class="fc" id="L356">					PrologTerm head = toTerm(clause.arg(1), PrologTerm.class);</span>
+<span class="fc" id="L357">					PrologTerm body = toTerm(clause.arg(2), PrologTerm.class);</span>
+<span class="pc bpc" id="L358" title="1 of 2 branches missed.">					if (body.getType() != PrologTermType.TRUE_TYPE) {</span>
+<span class="fc" id="L359">						cls.add(new JplClause(provider, head, body, false, false, false));</span>
+					} else {
+<span class="nc" id="L361">						cls.add(new JplClause(provider, head, false, false, false));</span>
+					}
+<span class="fc" id="L363">				} else {</span>
+<span class="fc" id="L364">					cls.add(new JplClause(provider, toTerm(clause, PrologTerm.class), false, false, false));</span>
+				}
+<span class="fc" id="L366">			}</span>
+<span class="fc" id="L367">		}</span>
+<span class="fc" id="L368">		return new PrologProgramIterator(cls);</span>
+	}
+
+	public final void dispose() {
+<span class="fc" id="L372">		File c = new File(cache);</span>
+<span class="fc" id="L373">		PrintWriter writer = null;</span>
+		try {
+<span class="fc" id="L375">			writer = new PrintWriter(new FileOutputStream(cache, false));</span>
+<span class="fc" id="L376">			writer.print(&quot;&quot;);</span>
+<span class="nc" id="L377">		} catch (FileNotFoundException e) {</span>
+<span class="nc" id="L378">			getLogger().error(getClass(), IO + cache, e);</span>
+		} finally {
+<span class="pc bpc" id="L380" title="1 of 2 branches missed.">			if (writer != null) {</span>
+<span class="fc" id="L381">				writer.close();</span>
+			}
+		}
+<span class="fc" id="L384">		c.deleteOnExit();</span>
+<span class="fc" id="L385">		program.clear();</span>
+<span class="fc" id="L386">	}</span>
+
+	public final String getCache() {
+<span class="fc" id="L389">		return cache;</span>
+	}
+
+	@Override
+	public int hashCode() {
+<span class="nc" id="L394">		final int prime = 31;</span>
+<span class="nc" id="L395">		int result = super.hashCode();</span>
+<span class="nc bnc" id="L396" title="All 2 branches missed.">		result = prime * result + ((program == null) ? 0 : program.hashCode());</span>
+<span class="nc" id="L397">		return result;</span>
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+<span class="pc bpc" id="L402" title="1 of 2 branches missed.">		if (this == obj)</span>
+<span class="fc" id="L403">			return true;</span>
+<span class="nc bnc" id="L404" title="All 2 branches missed.">		if (!super.equals(obj))</span>
+<span class="nc" id="L405">			return false;</span>
+<span class="nc bnc" id="L406" title="All 2 branches missed.">		if (getClass() != obj.getClass())</span>
+<span class="nc" id="L407">			return false;</span>
+<span class="nc" id="L408">		JplEngine other = (JplEngine) obj;</span>
+<span class="nc bnc" id="L409" title="All 2 branches missed.">		if (program == null) {</span>
+<span class="nc bnc" id="L410" title="All 2 branches missed.">			if (other.program != null)</span>
+<span class="nc" id="L411">				return false;</span>
+<span class="nc bnc" id="L412" title="All 2 branches missed.">		} else if (!program.equals(other.program)) {</span>
+<span class="nc" id="L413">			return false;</span>
+		}
+<span class="nc" id="L415">		return true;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

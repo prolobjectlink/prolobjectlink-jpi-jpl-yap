@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../jacoco-resources/report.gif" type="image/gif"/><title>JplProgram.java</title><link rel="stylesheet" href="../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../index.html" class="el_report">prolobjectlink-jpi-jpl-yap</a> &gt; <a href="../index.html" class="el_bundle">prolobjectlink-jpi-jpl</a> &gt; <a href="index.source.html" class="el_package">io.github.prolobjectlink.prolog.jpl</a> &gt; <span class="el_source">JplProgram.java</span></div><h1>JplProgram.java</h1><pre class="source lang-java linenums">/*
+ * #%L
+ * prolobjectlink-jpi-jpl
+ * %%
+ * Copyright (C) 2019 Prolobjectlink Project
+ * %%
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 2.1 of the
+ * License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Lesser Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Lesser Public
+ * License along with this program.  If not, see
+ * &lt;http://www.gnu.org/licenses/lgpl-2.1.html&gt;.
+ * #L%
+ */
+package io.github.prolobjectlink.prolog.jpl;
+
+import java.util.AbstractSet;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import io.github.prolobjectlink.prolog.ArrayIterator;
+import io.github.prolobjectlink.prolog.PrologClauses;
+import io.github.prolobjectlink.prolog.PrologError;
+import jpl.Term;
+
+/**
+ * 
+ * @author Jose Zalacain
+ * @since 1.0
+ */
+<span class="fc" id="L42">final class JplProgram extends AbstractSet&lt;List&lt;Term&gt;&gt; {</span>
+
+	//
+<span class="fc" id="L45">	private final JplParser parser = new JplParser();</span>
+
+	// program initializations goals
+<span class="fc" id="L48">	private final List&lt;Term&gt; goals = new LinkedList&lt;Term&gt;();</span>
+
+	// list of directives goals
+<span class="fc" id="L51">	private final List&lt;Term&gt; directives = new LinkedList&lt;Term&gt;();</span>
+
+	// program (data base) in read order
+<span class="fc" id="L54">	private final LinkedHashMap&lt;String, List&lt;Term&gt;&gt; clauses = new LinkedHashMap&lt;String, List&lt;Term&gt;&gt;();</span>
+
+	private String getKey(Term clause) {
+<span class="fc" id="L57">		String key = clause.name();</span>
+<span class="fc" id="L58">		key += &quot;/&quot; + clause.arity();</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">		if (key.equals(&quot;:-/2&quot;)) {</span>
+<span class="fc" id="L60">			key = clause.arg(1).name();</span>
+<span class="fc" id="L61">			key += &quot;/&quot;;</span>
+<span class="fc" id="L62">			key += clause.arg(1).arity();</span>
+		}
+<span class="fc" id="L64">		return key;</span>
+	}
+
+	private String getKey(List&lt;Term&gt; cls) {
+<span class="nc" id="L68">		String msg = &quot;Empty clause list&quot;;</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">		if (!cls.isEmpty()) {</span>
+<span class="nc" id="L70">			Term t = cls.get(0);</span>
+<span class="nc" id="L71">			String key = t.name();</span>
+<span class="nc" id="L72">			key += &quot;/&quot; + t.arity();</span>
+<span class="nc" id="L73">			return key;</span>
+		}
+<span class="nc" id="L75">		throw new PrologError(msg);</span>
+	}
+
+	public List&lt;Term&gt; get(String key) {
+<span class="fc" id="L79">		return clauses.get(key);</span>
+	}
+
+	public void add(Term clause) {
+<span class="fc" id="L83">		String key = getKey(clause);</span>
+<span class="fc" id="L84">		List&lt;Term&gt; family = get(key);</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">		if (family == null) {</span>
+<span class="fc" id="L86">			family = new LinkedList&lt;Term&gt;();</span>
+<span class="fc" id="L87">			family.add(clause);</span>
+<span class="fc" id="L88">			clauses.put(key, family);</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">		} else if (!family.contains(clause)) {</span>
+<span class="fc" id="L90">			family.add(clause);</span>
+		}
+<span class="fc" id="L92">	}</span>
+
+	@Override
+	public boolean add(List&lt;Term&gt; cls) {
+<span class="nc" id="L96">		String key = getKey(cls);</span>
+<span class="nc" id="L97">		List&lt;Term&gt; family = get(key);</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">		if (family != null) {</span>
+<span class="nc" id="L99">			family.addAll(cls);</span>
+		} else {
+<span class="nc" id="L101">			clauses.put(key, cls);</span>
+		}
+<span class="nc" id="L103">		return true;</span>
+	}
+
+	public void add(JplProgram program) {
+<span class="fc" id="L107">		goals.addAll(program.getGoals());</span>
+<span class="fc" id="L108">		clauses.putAll(program.getClauses());</span>
+<span class="fc" id="L109">		directives.addAll(program.getDirectives());</span>
+<span class="fc" id="L110">	}</span>
+
+	@Override
+	public boolean remove(Object o) {
+
+<span class="nc bnc" id="L115" title="All 2 branches missed.">		if (o instanceof Term) {</span>
+<span class="nc" id="L116">			Term c = (Term) o;</span>
+<span class="nc" id="L117">			String key = getKey(c);</span>
+<span class="nc" id="L118">			List&lt;Term&gt; family = get(key);</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">			if (family != null) {</span>
+<span class="nc" id="L120">				return family.remove(c);</span>
+			}
+<span class="nc" id="L122">		}</span>
+
+<span class="nc bnc" id="L124" title="All 2 branches missed.">		else if (o instanceof PrologClauses) {</span>
+<span class="nc" id="L125">			PrologClauses cs = (PrologClauses) o;</span>
+<span class="nc" id="L126">			String key = cs.getIndicator();</span>
+<span class="nc" id="L127">			List&lt;Term&gt; oldFamily = clauses.remove(key);</span>
+<span class="nc bnc" id="L128" title="All 2 branches missed.">			return oldFamily != null;</span>
+		}
+
+<span class="nc" id="L131">		return false;</span>
+	}
+
+	public boolean remove(Term o) {
+
+<span class="pc bpc" id="L136" title="1 of 2 branches missed.">		if (o instanceof Term) {</span>
+<span class="fc" id="L137">			String key = getKey(o);</span>
+<span class="fc" id="L138">			List&lt;Term&gt; family = get(key);</span>
+<span class="pc bpc" id="L139" title="1 of 2 branches missed.">			if (family != null) {</span>
+<span class="fc" id="L140">				return family.remove(o);</span>
+			}
+		}
+
+<span class="nc" id="L144">		return false;</span>
+	}
+
+	public void push(Term clause) {
+<span class="fc" id="L148">		String key = getKey(clause);</span>
+<span class="fc" id="L149">		List&lt;Term&gt; family = clauses.remove(key);</span>
+<span class="fc" id="L150">		List&lt;Term&gt; cs = new LinkedList&lt;Term&gt;();</span>
+<span class="fc bfc" id="L151" title="All 4 branches covered.">		if (family != null &amp;&amp; !family.contains(clause)) {</span>
+<span class="fc" id="L152">			cs.add(clause);</span>
+<span class="fc bfc" id="L153" title="All 2 branches covered.">			for (Term term : family) {</span>
+<span class="fc" id="L154">				cs.add(term);</span>
+<span class="fc" id="L155">			}</span>
+		} else {
+<span class="fc" id="L157">			cs.add(clause);</span>
+		}
+<span class="fc" id="L159">		clauses.put(key, cs);</span>
+<span class="fc" id="L160">	}</span>
+
+	public void removeAll(String key) {
+<span class="fc" id="L163">		clauses.remove(key);</span>
+<span class="fc" id="L164">	}</span>
+
+	public void removeAll(String functor, int arity) {
+<span class="fc" id="L167">		removeAll(functor + &quot;/&quot; + arity);</span>
+<span class="fc" id="L168">	}</span>
+
+	public List&lt;Term&gt; getDirectives() {
+<span class="fc" id="L171">		return directives;</span>
+	}
+
+	public boolean addDirective(Term directive) {
+<span class="nc" id="L175">		return directives.add(directive);</span>
+	}
+
+	public boolean removeDirective(Term directive) {
+<span class="nc" id="L179">		return directives.remove(directive);</span>
+	}
+
+	public List&lt;Term&gt; getGoals() {
+<span class="fc" id="L183">		return goals;</span>
+	}
+
+	public boolean addGoal(Term goal) {
+<span class="nc" id="L187">		return goals.add(goal);</span>
+	}
+
+	public boolean removeGoal(Term goal) {
+<span class="nc" id="L191">		return goals.remove(goal);</span>
+	}
+
+	public Set&lt;String&gt; getIndicators() {
+<span class="nc" id="L195">		return clauses.keySet();</span>
+	}
+
+	public Map&lt;String, List&lt;Term&gt;&gt; getClauses() {
+<span class="fc" id="L199">		return clauses;</span>
+	}
+
+	@Override
+	public String toString() {
+
+<span class="fc" id="L205">		StringBuilder families = new StringBuilder();</span>
+
+<span class="pc bpc" id="L207" title="1 of 2 branches missed.">		if (!directives.isEmpty()) {</span>
+<span class="nc" id="L208">			Iterator&lt;Term&gt; i = directives.iterator();</span>
+<span class="nc bnc" id="L209" title="All 2 branches missed.">			while (i.hasNext()) {</span>
+<span class="nc" id="L210">				families.append(&quot;:-&quot;);</span>
+<span class="nc" id="L211">				families.append(i.next());</span>
+<span class="nc" id="L212">				families.append('.');</span>
+<span class="nc bnc" id="L213" title="All 2 branches missed.">				families.append(i.hasNext() ? &quot;\n&quot; : &quot;\n\n&quot;);</span>
+			}
+		}
+
+<span class="fc bfc" id="L217" title="All 2 branches covered.">		if (!clauses.isEmpty()) {</span>
+<span class="fc" id="L218">			Iterator&lt;List&lt;Term&gt;&gt; i = iterator();</span>
+<span class="fc bfc" id="L219" title="All 2 branches covered.">			while (i.hasNext()) {</span>
+<span class="fc" id="L220">				List&lt;Term&gt; l = i.next();</span>
+<span class="fc" id="L221">				Iterator&lt;Term&gt; j = l.iterator();</span>
+<span class="fc bfc" id="L222" title="All 2 branches covered.">				while (j.hasNext()) {</span>
+<span class="fc" id="L223">					Term term = j.next();</span>
+<span class="fc" id="L224">					String key = term.name();</span>
+<span class="fc" id="L225">					key += &quot;/&quot; + term.arity();</span>
+<span class="fc bfc" id="L226" title="All 4 branches covered.">					if (term.arity() == 2 &amp;&amp; key.equals(&quot;:-/2&quot;)) {</span>
+<span class="fc" id="L227">						Term h = term.arg(1);</span>
+<span class="fc" id="L228">						Term b = term.arg(2);</span>
+<span class="fc" id="L229">						families.append(h);</span>
+<span class="fc" id="L230">						families.append(&quot; :- &quot;);</span>
+<span class="fc" id="L231">						families.append('\n');</span>
+<span class="fc" id="L232">						families.append('\t');</span>
+<span class="fc" id="L233">						Term[] array = parser.parseTerms(b);</span>
+<span class="fc" id="L234">						Iterator&lt;Term&gt; k = new ArrayIterator&lt;Term&gt;(array);</span>
+<span class="fc bfc" id="L235" title="All 2 branches covered.">						while (k.hasNext()) {</span>
+<span class="fc" id="L236">							Term item = k.next();</span>
+<span class="fc" id="L237">							families.append(item);</span>
+<span class="fc bfc" id="L238" title="All 2 branches covered.">							if (k.hasNext()) {</span>
+<span class="fc" id="L239">								families.append(',');</span>
+<span class="fc" id="L240">								families.append('\n');</span>
+<span class="fc" id="L241">								families.append('\t');</span>
+							}
+<span class="fc" id="L243">						}</span>
+<span class="fc" id="L244">					} else {</span>
+<span class="fc" id="L245">						families.append(term);</span>
+					}
+<span class="fc" id="L247">					families.append('.');</span>
+<span class="fc" id="L248">					families.append('\n');</span>
+<span class="fc" id="L249">				}</span>
+<span class="fc bfc" id="L250" title="All 2 branches covered.">				if (i.hasNext()) {</span>
+<span class="fc" id="L251">					families.append('\n');</span>
+				}
+<span class="fc" id="L253">			}</span>
+		}
+
+<span class="fc" id="L256">		return &quot;&quot; + families + &quot;&quot;;</span>
+	}
+
+	@Override
+	public Iterator&lt;List&lt;Term&gt;&gt; iterator() {
+<span class="fc" id="L261">		return clauses.values().iterator();</span>
+	}
+
+	@Override
+	public int size() {
+<span class="fc" id="L266">		int size = 0;</span>
+<span class="fc" id="L267">		Iterator&lt;List&lt;Term&gt;&gt; i = iterator();</span>
+<span class="fc bfc" id="L268" title="All 2 branches covered.">		while (i.hasNext()) {</span>
+<span class="fc" id="L269">			List&lt;Term&gt; l = i.next();</span>
+<span class="fc" id="L270">			Iterator&lt;Term&gt; j = l.iterator();</span>
+<span class="fc bfc" id="L271" title="All 2 branches covered.">			while (j.hasNext()) {</span>
+<span class="fc" id="L272">				j.next();</span>
+<span class="fc" id="L273">				size++;</span>
+			}
+<span class="fc" id="L275">		}</span>
+<span class="fc" id="L276">		return size;</span>
+	}
+
+	@Override
+	public void clear() {
+<span class="fc" id="L281">		goals.clear();</span>
+<span class="fc" id="L282">		clauses.clear();</span>
+<span class="fc" id="L283">		directives.clear();</span>
+<span class="fc" id="L284">	}</span>
+
+	@Override
+	public int hashCode() {
+<span class="nc" id="L288">		final int prime = 31;</span>
+<span class="nc" id="L289">		int result = super.hashCode();</span>
+<span class="nc" id="L290">		result = prime * result + clauses.hashCode();</span>
+<span class="nc" id="L291">		result = prime * result + directives.hashCode();</span>
+<span class="nc" id="L292">		result = prime * result + goals.hashCode();</span>
+<span class="nc" id="L293">		return result;</span>
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+<span class="nc bnc" id="L298" title="All 2 branches missed.">		if (this == obj)</span>
+<span class="nc" id="L299">			return true;</span>
+<span class="nc bnc" id="L300" title="All 2 branches missed.">		if (!super.equals(obj))</span>
+<span class="nc" id="L301">			return false;</span>
+<span class="nc bnc" id="L302" title="All 2 branches missed.">		if (getClass() != obj.getClass())</span>
+<span class="nc" id="L303">			return false;</span>
+<span class="nc" id="L304">		JplProgram other = (JplProgram) obj;</span>
+<span class="nc bnc" id="L305" title="All 2 branches missed.">		if (!clauses.equals(other.clauses)) {</span>
+<span class="nc" id="L306">			return false;</span>
+		}
+<span class="nc bnc" id="L308" title="All 2 branches missed.">		if (!directives.equals(other.directives)) {</span>
+<span class="nc" id="L309">			return false;</span>
+		}
+<span class="nc" id="L311">		return goals.equals(other.goals);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>
