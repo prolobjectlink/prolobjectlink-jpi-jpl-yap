@@ -207,7 +207,7 @@
 <a class="jxr_linenumber" name="197" href="#197">197</a> 		<em class="jxr_comment">// with double</em>
 <a class="jxr_linenumber" name="198" href="#198">198</a> 		PrologDouble dValue = provider.newDouble(36.47);
 <a class="jxr_linenumber" name="199" href="#199">199</a> 		PrologDouble dValue1 = provider.newDouble(100.98);
-<a class="jxr_linenumber" name="200" href="#200">200</a> 		<em class="jxr_comment">// true because are equals</em>
+<a class="jxr_linenumber" name="200" href="#200">200</a> 		<em class="jxr_comment">// false because float and double are not equals</em>
 <a class="jxr_linenumber" name="201" href="#201">201</a> 		assertFalse(fValue.unify(dValue));
 <a class="jxr_linenumber" name="202" href="#202">202</a> 		<em class="jxr_comment">// false because are different</em>
 <a class="jxr_linenumber" name="203" href="#203">203</a> 		assertFalse(fValue.unify(dValue1));

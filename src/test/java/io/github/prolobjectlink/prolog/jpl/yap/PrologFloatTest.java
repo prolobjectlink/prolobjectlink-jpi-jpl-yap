@@ -197,7 +197,7 @@ public class PrologFloatTest extends PrologBaseTest {
 		// with double
 		PrologDouble dValue = provider.newDouble(36.47);
 		PrologDouble dValue1 = provider.newDouble(100.98);
-		// true because are equals
+		// false because float and double are not equals
 		assertFalse(fValue.unify(dValue));
 		// false because are different
 		assertFalse(fValue.unify(dValue1));
