@@ -1335,5 +1335,22 @@ public class PrologEngineTest extends PrologBaseTest {
 		assertEquals(size, counter);
 
 	}
+	
+	@Test
+	public final void testMatch() {
+
+		Map<String, PrologTerm>map=new HashMap<String, PrologTerm>(1);
+		PrologTerm variable = provider.newVariable("X",0);
+		PrologTerm atom = provider.newAtom("doe");
+		PrologEngine engine=provider.newEngine();
+		map.put("X", atom);
+		assertEquals(map, variable.match(atom));
+		PrologTerm variables=provider.newStructure("struct", variable);
+		PrologTerm atoms=provider.newStructure("struct", atom);
+		map.clear();
+		map.put("X", atom);
+		assertEquals(map, engine.match(variables, atoms));
+
+	}
 
 }
